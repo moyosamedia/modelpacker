@@ -12,7 +12,7 @@ namespace ModelPacker.CustomControls
                 string[] retVal = new string[items.Count];
                 for (int i = 0; i < items.Count; i++)
                 {
-                    retVal[i] = items.ToString();
+                    retVal[i] = items[i].ToString();
                 }
 
                 return retVal;
