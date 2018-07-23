@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:customControls="clr-namespace:ModelPacker.CustomControls"
         mc:Ignorable="d"
-        Title="Model Packer" Height="700" Width="500">
+        Title="Model Packer" Height="700" Width="500"
+        Drop="Window_Drop">
     <ScrollViewer HorizontalScrollBarVisibility="Auto">
         <StackPanel>
             <GroupBox Header="Input">

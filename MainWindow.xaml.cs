@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Assimp;
 using Assimp.Unmanaged;
-using ModelPacker.CustomControls;
+using ImageMagick;
 
 namespace ModelPacker
 {
@@ -61,6 +61,43 @@ namespace ModelPacker
                 outputFilesPrefix = FilesPrefix.Text,
                 outputDir = ExportDirectory.FullPath
             });
+        }
+
+        private void Window_Drop(object sender, DragEventArgs e)
+        {
+            string[] droppedFiles = null;
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                droppedFiles = e.Data.GetData(DataFormats.FileDrop, true) as string[];
+            }
+
+            if (null == droppedFiles || !droppedFiles.Any())
+            {
+                return;
+            }
+
+            foreach (string droppedFile in droppedFiles)
+            {
+                if (AssimpLibrary.Instance.IsExtensionSupported(Path.GetExtension(droppedFile)))
+                {
+                    ModelFiles.Add(droppedFile);
+                }
+                else
+                {
+                    try
+                    {
+                        using (new MagickImage(droppedFile))
+                        {
+                        }
+
+                        TextureFiles.Add(droppedFile);
+                    }
+                    catch (MagickMissingDelegateErrorException)
+                    {
+                        Log.Line(LogType.Warning, "Dropped file '{0}' is not supported", droppedFile);
+                    }
+                }
+            }
         }
     }
 }
