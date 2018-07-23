@@ -1,9 +1,14 @@
 ﻿<Application x:Class="ModelPacker.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:ModelPacker"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <system:Double x:Key="LabelWidth">125.0</system:Double>
+        <system:Double x:Key="SideButtonWidth">50.0</system:Double>
+        <system:String x:Key="FileBrowseButtonText">Browse</system:String>
+        <system:String x:Key="FileAddButtonText">Add</system:String>
+        <system:String x:Key="FileRemoveButtonText">Remove</system:String>
+        <system:String x:Key="ClearButtonText">Clear</system:String>
     </Application.Resources>
 </Application>

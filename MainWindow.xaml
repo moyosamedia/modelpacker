@@ -3,10 +3,117 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ModelPacker"
+        xmlns:customControls="clr-namespace:ModelPacker.CustomControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="Model Packer" Height="700" Width="500">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <StackPanel>
+            <GroupBox Header="Input">
+                <DockPanel AllowDrop="True">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{Binding Source={StaticResource LabelWidth}}" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Content="Models" />
+                        <customControls:FileList
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            x:Name="ModelFiles" />
+
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="1"
+                            Content="Textures" />
+                        <customControls:FileList
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            x:Name="TextureFiles" />
+                    </Grid>
+                </DockPanel>
+            </GroupBox>
+            <GroupBox Header="Options">
+                <DockPanel>
+                    <Label
+                        Width="{Binding Source={StaticResource LabelWidth}}"
+                        Content="Merge Models" />
+                    <CheckBox Name="DoMergeFiles" />
+                </DockPanel>
+            </GroupBox>
+            <GroupBox Header="Output">
+                <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{Binding Source={StaticResource LabelWidth}}" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Content="Model Type" />
+                        <ComboBox
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Name="ExportFormats">
+                            <ComboBoxItem IsSelected="True">Collada (.dae)</ComboBoxItem>
+                            <ComboBoxItem>Wavefront Object (.obj)</ComboBoxItem>
+                            <ComboBoxItem>Stereolithography (.stl)</ComboBoxItem>
+                            <ComboBoxItem>Stanford Polygon Library (.ply)</ComboBoxItem>
+                        </ComboBox>
+
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="1"
+                            Content="Files Prefix" />
+                        <TextBox
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            Text=""
+                            Name="FilesPrefix"/>
+
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="2"
+                            Content="Export Directory" />
+                        <customControls:FilePath
+                            Grid.Column="1"
+                            Grid.Row="2"
+                            SelectDirectory="True"
+                            x:Name="ExportDirectory" />
+                    </Grid>
+                </DockPanel>
+            </GroupBox>
+            <GroupBox Header="Info">
+                <ScrollViewer
+                    HorizontalScrollBarVisibility="Auto"
+                    MaxHeight="200"
+                    Name="InfoScroller">
+                    <TextBlock
+                        TextWrapping="Wrap"
+                        Width="{Binding ElementName=InfoScroller, Path=ViewportWidth}"
+                        Name="InfoText" />
+                </ScrollViewer>
+            </GroupBox>
+            <Button
+                Content="Export"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Width="75"
+                Margin="10"
+                Click="OnExportButtonClick" />
+        </StackPanel>
+    </ScrollViewer>
 </Window>

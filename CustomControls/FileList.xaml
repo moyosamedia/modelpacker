@@ -1,0 +1,45 @@
+<UserControl x:Class="ModelPacker.CustomControls.FileList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d"
+             d:DesignHeight="100" d:DesignWidth="200">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="{Binding Source={StaticResource SideButtonWidth}}" />
+        </Grid.ColumnDefinitions>
+        <ListView
+            Grid.Column="0"
+            Grid.Row="0"
+            Name="FilesList">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Path" Width="Auto" />
+                </GridView>
+            </ListView.View>
+            <ListView.Items>
+                <system:String>C:\Users\Vincent\Downloads\File.fbx</system:String>
+            </ListView.Items>
+        </ListView>
+        <DockPanel
+            Grid.Column="1"
+            Grid.Row="0"
+            LastChildFill="False">
+            <Button
+                Height="25"
+                DockPanel.Dock="Top"
+                Content="{Binding Source={StaticResource FileAddButtonText}}" />
+            <Button
+                Height="25"
+                DockPanel.Dock="Top"
+                Content="{Binding Source={StaticResource FileRemoveButtonText}}" />
+            <Button
+                Height="25"
+                DockPanel.Dock="Top"
+                Content="{Binding Source={StaticResource ClearButtonText}}" />
+        </DockPanel>
+    </Grid>
+</UserControl>
