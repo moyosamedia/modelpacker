@@ -17,12 +17,9 @@
             Name="FilesList">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Path" Width="Auto" />
+                    <GridViewColumn Header="Path" Width="250" />
                 </GridView>
             </ListView.View>
-            <ListView.Items>
-                <system:String>C:\Users\Vincent\Downloads\File.fbx</system:String>
-            </ListView.Items>
         </ListView>
         <DockPanel
             Grid.Column="1"
@@ -31,15 +28,21 @@
             <Button
                 Height="25"
                 DockPanel.Dock="Top"
-                Content="{Binding Source={StaticResource FileAddButtonText}}" />
+                Content="{Binding Source={StaticResource FileAddButtonText}}"
+                Name="AddButton"
+                Click="AddButton_OnClick"/>
             <Button
                 Height="25"
                 DockPanel.Dock="Top"
-                Content="{Binding Source={StaticResource FileRemoveButtonText}}" />
+                Content="{Binding Source={StaticResource FileRemoveButtonText}}"
+                Name="RemoveButton" 
+                Click="RemoveButton_OnClick"/>
             <Button
                 Height="25"
                 DockPanel.Dock="Top"
-                Content="{Binding Source={StaticResource ClearButtonText}}" />
+                Content="{Binding Source={StaticResource ClearButtonText}}"
+                Name="ClearButton"
+                Click="ClearButton_OnClick"/>
         </DockPanel>
     </Grid>
 </UserControl>
