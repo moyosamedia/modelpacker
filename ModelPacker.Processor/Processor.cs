@@ -3,7 +3,7 @@ using Assimp.Unmanaged;
 using ImageMagick;
 using ModelPacker.Logger;
 
-namespace ModelPacker.UI
+namespace ModelPacker.Processor
 {
     public static class Processor
     {

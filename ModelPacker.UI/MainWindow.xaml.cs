@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -6,10 +7,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using Assimp;
-using Assimp.Unmanaged;
-using ImageMagick;
 using ModelPacker.Logger;
+using ModelPacker.Processor;
 
 namespace ModelPacker.UI
 {
@@ -58,16 +57,15 @@ namespace ModelPacker.UI
 
         private void PopulateExportComboBox()
         {
-            ExportFormatDescription[] exportFormatDescriptions = AssimpLibrary.Instance.GetExportFormatDescriptions();
             ExportFormats.Items.Clear();
-            ExportFormats.Tag = exportFormatDescriptions.Select(x => x.FormatId).ToArray();
+            
+            IEnumerable<Utils.ExportFormats> modelExportFormats = Utils.GetModelExportFormats();
+            ExportFormats.Tag = modelExportFormats.Select(x => x.id).ToArray();
             Debug.Assert(ExportFormats.Tag != null);
 
-            foreach (ExportFormatDescription exportFormatDescription in exportFormatDescriptions)
+            foreach (Utils.ExportFormats format in modelExportFormats)
             {
-                ExportFormats.Items.Add(string.Format("{0}, (.{1})",
-                    exportFormatDescription.Description,
-                    exportFormatDescription.FileExtension));
+                ExportFormats.Items.Add(format.name);
             }
 
             ExportFormats.SelectedIndex = 0;
@@ -81,7 +79,7 @@ namespace ModelPacker.UI
             Debug.Assert(exportIds != null);
             Debug.Assert(exportIds.Length > 0);
 
-            Processor.Run(new ProcessorInfo
+            Processor.Processor.Run(new ProcessorInfo
             {
                 models = ModelFiles.files,
                 textures = TextureFiles.files,
@@ -107,21 +105,17 @@ namespace ModelPacker.UI
 
             foreach (string droppedFile in droppedFiles)
             {
-                if (AssimpLibrary.Instance.IsExtensionSupported(Path.GetExtension(droppedFile)))
+                if (Utils.IsModelExtensionSupported(Path.GetExtension(droppedFile)))
                 {
                     ModelFiles.Add(droppedFile);
                 }
                 else
                 {
-                    try
+                    if (Utils.IsImageSupported(droppedFile))
                     {
-                        using (new MagickImage(droppedFile))
-                        {
-                        }
-
                         TextureFiles.Add(droppedFile);
                     }
-                    catch (MagickMissingDelegateErrorException)
+                    else
                     {
                         Log.Line(LogType.Warning, "Dropped file '{0}' is not supported", droppedFile);
                     }

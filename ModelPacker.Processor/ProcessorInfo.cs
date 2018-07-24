@@ -1,4 +1,4 @@
-namespace ModelPacker.UI
+namespace ModelPacker.Processor
 {
     public struct ProcessorInfo
     {

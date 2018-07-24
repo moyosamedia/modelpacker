@@ -34,16 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AssimpNet, Version=3.3.2.0, Culture=neutral, PublicKeyToken=3edc10cb77b1bca2">
-      <HintPath>packages\AssimpNet.3.3.2\lib\net20\AssimpNet.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="JetBrains.Annotations, Version=11.1.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325">
       <HintPath>..\packages\JetBrains.Annotations.11.1.0\lib\net20\JetBrains.Annotations.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Magick.NET-Q8-AnyCPU, Version=7.5.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec">
-      <HintPath>..\packages\Magick.NET-Q8-AnyCPU.7.5.0.1\lib\net40\Magick.NET-Q8-AnyCPU.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -86,8 +78,6 @@
     <Page Include="CustomControls\FilePath.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Processor.cs" />
-    <Compile Include="ProcessorInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -109,6 +99,10 @@
     <ProjectReference Include="..\ModelPacker.Logger\ModelPacker.Logger.csproj">
       <Project>{4ec652e4-64ed-48ee-901e-f33f88922f71}</Project>
       <Name>ModelPacker.Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModelPacker.Processor\ModelPacker.Processor.csproj">
+      <Project>{3e4cb375-2c38-4a62-aa0b-d8fd11c549fc}</Project>
+      <Name>ModelPacker.Processor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
