@@ -1,3 +1,4 @@
+using System;
 using JetBrains.Annotations;
 
 namespace ModelPacker.Logger
@@ -12,6 +13,14 @@ namespace ModelPacker.Logger
         public static void Line(LogType type, string format, params object[] args)
         {
             Line(type, string.Format(format, args));
+        }
+
+        public static void Exception(Exception e)
+        {
+            Line(LogType.Error, "{0}: {1}\n{2}",
+                e.GetType().Name,
+                e.Message,
+                e.StackTrace);
         }
 
         public static void Line(LogType type, string message)
