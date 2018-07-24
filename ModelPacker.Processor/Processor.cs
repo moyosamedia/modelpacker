@@ -14,12 +14,15 @@ namespace ModelPacker.Processor
             Log.Line(LogType.Debug, "Creating output directory {0}", info.outputDir);
             Directory.CreateDirectory(info.outputDir);
 
-            PackImages(info);
+            if (!PackImages(info))
+            {
+                return false;
+            }
 
             return false;
         }
 
-        private static void PackImages(ProcessorInfo info)
+        private static bool PackImages(ProcessorInfo info)
         {
             Log.Line(LogType.Debug, "Packing {0} images", info.textures.Length);
 
@@ -39,14 +42,24 @@ namespace ModelPacker.Processor
                     images.Add(file);
                 }
 
-                using (IMagickImage result = images.Montage(montageSettings))
+                try
                 {
-                    string savePath = Path.Combine(info.outputDir,
-                        string.Format("{0}-packed.png", info.outputFilesPrefix));
-                    Log.Line(LogType.Info, "Saving packed image to '{0}'", savePath);
-                    result.Write(savePath);
+                    using (IMagickImage result = images.Montage(montageSettings))
+                    {
+                        string savePath = Path.Combine(info.outputDir,
+                            string.Format("{0}-packed.png", info.outputFilesPrefix));
+                        Log.Line(LogType.Info, "Saving packed image to '{0}'", savePath);
+                        result.Write(savePath);
+                    }
+                }
+                catch (MagickOptionErrorException e)
+                {
+                    Log.Exception(e);
+                    return false;
                 }
             }
+
+            return true;
         }
 
         private static void MagickNetOnLog(object sender, LogEventArgs e)
