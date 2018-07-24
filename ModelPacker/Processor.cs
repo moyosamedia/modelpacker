@@ -13,7 +13,44 @@ namespace ModelPacker
             Log.Line(LogType.Debug, "Creating output directory {0}", info.outputDir);
             Directory.CreateDirectory(info.outputDir);
 
+            PackImages(info);
+
             return false;
+        }
+
+        private static void PackImages(ProcessorInfo info)
+        {
+            Log.Line(LogType.Debug, "Packing {0} images", info.textures.Length);
+
+            MagickNET.SetLogEvents(LogEvents.All);
+            MagickNET.Log += MagickNetOnLog;
+
+            using (MagickImageCollection images = new MagickImageCollection())
+            {
+                MontageSettings montageSettings = new MontageSettings
+                {
+                    BackgroundColor = MagickColor.FromRgb(0, 0, 0),
+                    BorderWidth = 0
+                };
+
+                foreach (string file in info.textures)
+                {
+                    images.Add(file);
+                }
+
+                using (IMagickImage result = images.Montage(montageSettings))
+                {
+                    string savePath = Path.Combine(info.outputDir,
+                        string.Format("{0}-packed.png", info.outputFilesPrefix));
+                    Log.Line(LogType.Info, "Saving packed image to '{0}'", savePath);
+                    result.Write(savePath);
+                }
+            }
+        }
+
+        private static void MagickNetOnLog(object sender, LogEventArgs e)
+        {
+            Log.Line(LogType.Debug, string.Format("Magick.NET: {0}: {1}", e.EventType, e.Message));
         }
 
         private static bool CheckProcessorInfo(ProcessorInfo info)
