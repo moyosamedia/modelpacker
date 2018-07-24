@@ -102,6 +102,7 @@ namespace ModelPacker
                 if (!AssimpLibrary.Instance.IsExtensionSupported(Path.GetExtension(file)))
                 {
                     Log.Line(LogType.Error, "Model of type '{0}' is not supported", Path.GetExtension(file));
+                    return false;
                 }
             }
 
