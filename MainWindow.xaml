@@ -19,23 +19,28 @@
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
                         <Label
+                            Grid.Column="1">
+                            The order in which the items are listed matters!
+                        </Label>
+                        <Label
                             Grid.Column="0"
-                            Grid.Row="0"
+                            Grid.Row="1"
                             Content="Models" />
                         <customControls:FileList
                             Grid.Column="1"
-                            Grid.Row="0"
+                            Grid.Row="1"
                             x:Name="ModelFiles" />
 
                         <Label
                             Grid.Column="0"
-                            Grid.Row="1"
+                            Grid.Row="2"
                             Content="Textures" />
                         <customControls:FileList
                             Grid.Column="1"
-                            Grid.Row="1"
+                            Grid.Row="2"
                             x:Name="TextureFiles" />
                     </Grid>
                 </DockPanel>
@@ -83,7 +88,7 @@
                             Grid.Column="1"
                             Grid.Row="1"
                             Text=""
-                            Name="FilesPrefix"/>
+                            Name="FilesPrefix" />
 
                         <Label
                             Grid.Column="0"
