@@ -1,11 +1,15 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media;
 using Assimp;
 using Assimp.Unmanaged;
 using ImageMagick;
+using ModelPacker.Logger;
 
 namespace ModelPacker
 {
@@ -26,6 +30,30 @@ namespace ModelPacker
             InitializeComponent();
 
             PopulateExportComboBox();
+
+            Log.onLog = OnLogMessage;
+        }
+
+        private void OnLogMessage(LogType type, string message)
+        {
+            Run run = new Run(string.Format("[{0}] {1}", type, message));
+            switch (type)
+            {
+                case LogType.Debug:
+                case LogType.Info:
+                    break;
+                case LogType.Warning:
+                    run.Foreground = Brushes.Orange;
+                    break;
+                case LogType.Error:
+                    run.Foreground = Brushes.DarkRed;
+                    run.FontWeight = FontWeights.Bold;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+
+            TextBlock.Inlines.Add(run);
         }
 
         private void PopulateExportComboBox()
@@ -47,7 +75,8 @@ namespace ModelPacker
 
         private void OnExportButtonClick(object sender, RoutedEventArgs e)
         {
-            Log.Clear();
+            TextBlock.Text = string.Empty;
+
             string[] exportIds = ExportFormats.Tag as string[];
             Debug.Assert(exportIds != null);
             Debug.Assert(exportIds.Length > 0);

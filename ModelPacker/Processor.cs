@@ -1,6 +1,7 @@
 using System.IO;
 using Assimp.Unmanaged;
 using ImageMagick;
+using ModelPacker.Logger;
 
 namespace ModelPacker
 {

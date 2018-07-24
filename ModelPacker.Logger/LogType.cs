@@ -1,4 +1,4 @@
-namespace ModelPacker
+namespace ModelPacker.Logger
 {
     public enum LogType
     {
