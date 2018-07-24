@@ -47,10 +47,33 @@
             </GroupBox>
             <GroupBox Header="Options">
                 <DockPanel>
-                    <Label
-                        Width="{Binding Source={StaticResource LabelWidth}}"
-                        Content="Merge Models" />
-                    <CheckBox Name="DoMergeFiles" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{Binding Source={StaticResource LabelWidth}}" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Content="Merge Models" />
+                        <CheckBox 
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Name="DoMergeFiles" />
+                        
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="1"
+                            Content="Keep Transparency" />
+                        <CheckBox 
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            Name="DoKeepTransparency" />
+                    </Grid>
                 </DockPanel>
             </GroupBox>
             <GroupBox Header="Output">

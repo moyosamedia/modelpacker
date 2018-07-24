@@ -84,6 +84,7 @@ namespace ModelPacker.UI
                 models = ModelFiles.files,
                 textures = TextureFiles.files,
                 shouldMergeModels = DoMergeFiles.IsChecked == true,
+                keepTransparency = DoKeepTransparency.IsChecked == true,
                 modelExportFormatId = exportIds[ExportFormats.SelectedIndex],
                 outputFilesPrefix = FilesPrefix.Text,
                 outputDir = ExportDirectory.FullPath
