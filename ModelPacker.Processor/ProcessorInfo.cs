@@ -5,7 +5,7 @@ namespace ModelPacker.Processor
         public string[] models;
         public string[] textures;
         public bool shouldMergeModels;
-        public string exportFormatId;
+        public string modelExportFormatId;
         public string outputFilesPrefix;
         public string outputDir;
     }

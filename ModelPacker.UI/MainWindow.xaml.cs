@@ -84,7 +84,7 @@ namespace ModelPacker.UI
                 models = ModelFiles.files,
                 textures = TextureFiles.files,
                 shouldMergeModels = DoMergeFiles.IsChecked == true,
-                exportFormatId = exportIds[ExportFormats.SelectedIndex],
+                modelExportFormatId = exportIds[ExportFormats.SelectedIndex],
                 outputFilesPrefix = FilesPrefix.Text,
                 outputDir = ExportDirectory.FullPath
             });

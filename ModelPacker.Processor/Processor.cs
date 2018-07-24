@@ -74,7 +74,7 @@ namespace ModelPacker.Processor
                 return false;
             }
 
-            if (string.IsNullOrEmpty(info.exportFormatId))
+            if (string.IsNullOrEmpty(info.modelExportFormatId))
             {
                 Log.Line(LogType.Error, "Export format is null");
                 return false;
