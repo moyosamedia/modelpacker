@@ -1,4 +1,4 @@
-﻿namespace ModelPacker
+﻿namespace ModelPacker.UI
 {
     /// <summary>
     /// Interaction logic for App.xaml

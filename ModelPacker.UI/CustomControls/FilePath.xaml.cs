@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using UserControl = System.Windows.Controls.UserControl;
 
-namespace ModelPacker.CustomControls
+namespace ModelPacker.UI.CustomControls
 {
     public partial class FilePath : UserControl
     {

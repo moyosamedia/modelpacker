@@ -11,7 +11,7 @@ using Assimp.Unmanaged;
 using ImageMagick;
 using ModelPacker.Logger;
 
-namespace ModelPacker
+namespace ModelPacker.UI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

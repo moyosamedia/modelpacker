@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelPacker", "ModelPacker\ModelPacker.csproj", "{0C74B931-F859-465E-ABE3-0C70E6C88858}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelPacker.UI", "ModelPacker.UI\ModelPacker.UI.csproj", "{0C74B931-F859-465E-ABE3-0C70E6C88858}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelPacker.Logger", "ModelPacker.Logger\ModelPacker.Logger.csproj", "{4EC652E4-64ED-48EE-901E-F33F88922F71}"
 EndProject

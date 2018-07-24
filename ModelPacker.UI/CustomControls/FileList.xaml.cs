@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
 
-namespace ModelPacker.CustomControls
+namespace ModelPacker.UI.CustomControls
 {
     public partial class FileList : UserControl
     {
