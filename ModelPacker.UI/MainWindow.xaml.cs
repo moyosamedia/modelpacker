@@ -30,8 +30,6 @@ namespace ModelPacker.UI
 
             PopulateExportComboBoxes();
 
-            // TODO: implement textureOutputType from ProcessorInfo
-
             Log.onLog = OnLogMessage;
         }
 
@@ -95,6 +93,8 @@ namespace ModelPacker.UI
                 shouldMergeModels = DoMergeFiles.IsChecked == true,
                 keepTransparency = DoKeepTransparency.IsChecked == true,
                 modelExportFormatId = exportIds[ExportModelFormats.SelectedIndex],
+                textureOutputType = (TextureFileType) Enum.Parse(typeof(TextureFileType),
+                    ExportTextureFormats.SelectedItem.ToString()),
                 outputFilesPrefix = FilesPrefix.Text,
                 outputDir = ExportDirectory.FullPath
             });
