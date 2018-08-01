@@ -9,6 +9,11 @@ namespace ModelPacker.Logger
 
         public static LogHandler onLog;
 
+        public static void Line(LogType type, object obj)
+        {
+            Line(type, obj.ToString());
+        }
+
         [StringFormatMethod("format")]
         public static void Line(LogType type, string format, params object[] args)
         {
