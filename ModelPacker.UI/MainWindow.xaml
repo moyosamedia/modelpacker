@@ -87,6 +87,7 @@
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
 
                         <Label
@@ -106,20 +107,32 @@
                         <Label
                             Grid.Column="0"
                             Grid.Row="1"
+                            Content="Texture Type" />
+                        <ComboBox
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            Name="ExportTextureFormats">
+                            <ComboBoxItem IsSelected="True">PNG</ComboBoxItem>
+                            <ComboBoxItem>JPG</ComboBoxItem>
+                        </ComboBox>
+
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="2"
                             Content="Files Prefix" />
                         <TextBox
                             Grid.Column="1"
-                            Grid.Row="1"
+                            Grid.Row="2"
                             Text=""
                             Name="FilesPrefix" />
 
                         <Label
                             Grid.Column="0"
-                            Grid.Row="2"
+                            Grid.Row="3"
                             Content="Export Directory" />
                         <customControls:FilePath
                             Grid.Column="1"
-                            Grid.Row="2"
+                            Grid.Row="3"
                             SelectDirectory="True"
                             x:Name="ExportDirectory" />
                     </Grid>

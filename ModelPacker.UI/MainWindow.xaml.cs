@@ -28,8 +28,8 @@ namespace ModelPacker.UI
 
             InitializeComponent();
 
-            PopulateExportComboBox();
-            
+            PopulateExportComboBoxes();
+
             // TODO: implement textureOutputType from ProcessorInfo
 
             Log.onLog = OnLogMessage;
@@ -57,7 +57,7 @@ namespace ModelPacker.UI
             TextBlock.Inlines.Add(run);
         }
 
-        private void PopulateExportComboBox()
+        private void PopulateExportComboBoxes()
         {
             // Models
             ExportModelFormats.Items.Clear();
@@ -72,6 +72,12 @@ namespace ModelPacker.UI
             }
 
             ExportModelFormats.SelectedIndex = 0;
+
+            // Textures
+            ExportTextureFormats.Items.Clear();
+            foreach (string name in Enum.GetNames(typeof(TextureFileType)))
+                ExportTextureFormats.Items.Add(name);
+            ExportTextureFormats.SelectedIndex = 0;
         }
 
         private void OnExportButtonClick(object sender, RoutedEventArgs e)
