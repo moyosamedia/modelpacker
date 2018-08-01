@@ -12,4 +12,14 @@ namespace ModelPacker.BinPacker
             this.h = h;
         }
     }
+
+    public class Block<T> : Block
+    {
+        public T data;
+
+        public Block(int w, int h, T data) : base(w, h)
+        {
+            this.data = data;
+        }
+    }
 }
