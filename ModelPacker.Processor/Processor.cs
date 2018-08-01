@@ -107,10 +107,6 @@ namespace ModelPacker.Processor
             return true;
         }
 
-        private static void MagickNetOnLog(object sender, LogEventArgs e)
-        {
-            Log.Line(LogType.Debug, string.Format("Magick.NET: {0}: {1}", e.EventType, e.Message));
-        }
 
         private static bool CheckProcessorInfo(ProcessorInfo info)
         {
