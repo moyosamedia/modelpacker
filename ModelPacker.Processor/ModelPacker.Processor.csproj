@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileType.cs" />
     <Compile Include="Processor.cs" />
     <Compile Include="ProcessorInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
