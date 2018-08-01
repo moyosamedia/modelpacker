@@ -1,6 +1,9 @@
+using System;
+using System.Drawing;
 using System.IO;
 using Assimp.Unmanaged;
 using ImageMagick;
+using ModelPacker.BinPacker;
 using ModelPacker.Logger;
 
 namespace ModelPacker.Processor
@@ -24,39 +27,87 @@ namespace ModelPacker.Processor
 
         private static bool PackImages(ProcessorInfo info)
         {
-            Log.Line(LogType.Debug, "Packing {0} images", info.textures.Length);
+            Log.Line(LogType.Info, "Starting packing process for {0} images", info.textures.Length);
 
-            MagickNET.SetLogEvents(LogEvents.All);
-            MagickNET.Log += MagickNetOnLog;
+            Block[] blocks;
+            if (!MergeImages(info, out blocks)) return false;
 
-            using (MagickImageCollection images = new MagickImageCollection())
+            return true;
+        }
+
+        private static bool MergeImages(ProcessorInfo info, out Block[] blocks)
+        {
+            bool keepTransparency = info.keepTransparency && info.textureOutputType != TextureFileType.JPG;
+            MagickReadSettings readSettings = new MagickReadSettings
             {
-                MontageSettings montageSettings = new MontageSettings
-                {
-                    BackgroundColor = MagickColor.FromRgb(0, 0, 0),
-                    BorderWidth = 0
-                };
+                BackgroundColor = keepTransparency ? new MagickColor(0, 0, 0, 0) : MagickColors.Black
+            };
 
-                foreach (string file in info.textures)
-                {
-                    images.Add(file);
-                }
+            MagickImage[] images = new MagickImage[info.textures.Length];
+            blocks = new Block[info.textures.Length];
+            for (int i = 0; i < info.textures.Length; i++)
+            {
+                images[i] = new MagickImage(info.textures[i], readSettings);
+                blocks[i] = new Block(images[i].Width, images[i].Height);
+            }
 
-                try
+            Array.Sort(images, blocks);
+            Array.Reverse(images);
+            Array.Reverse(blocks);
+
+            BinPacking packer = new BinPacking();
+            packer.Fit(blocks);
+
+            Log.Line(LogType.Debug, "BinPacker: Root size: {{ width: {0}, height: {1} }}", packer.root.w, packer.root.h);
+
+            try
+            {
+                using (MagickImage finalImage = new MagickImage(
+                    readSettings.BackgroundColor,
+                    packer.root.w,
+                    packer.root.h))
                 {
-                    using (IMagickImage result = images.Montage(montageSettings))
+                    for (int i = 0; i < blocks.Length; i++)
+                    {
+                        Block block = blocks[i];
+                        if (block.fit != null)
+                        {
+                            Log.Line(LogType.Debug,
+                                "BinPacker: {0}: {{ pos: {{ x: {1}, y: {2} }}, size: {{ width: {3}, height: {4} }}}}",
+                                images[i].FileName,
+                                block.fit.x, block.fit.y,
+                                block.w, block.h);
+
+                            finalImage.Composite(images[i], block.fit.x, block.fit.y, CompositeOperator.Copy);
+                        }
+                        else
+                        {
+                            Log.Line(LogType.Warning, "BinPacker: Fit for '{0}' is null, it's not going to be in the final image",
+                                images[i].FileName);
+                        }
+                    }
+
+                    try
                     {
                         string savePath = Path.Combine(info.outputDir,
-                            string.Format("{0}-packed.png", info.outputFilesPrefix));
-                        Log.Line(LogType.Info, "Saving packed image to '{0}'", savePath);
-                        result.Write(savePath);
+                            string.Format("{0}-packed.{1}", info.outputFilesPrefix, info.textureOutputType));
+                        Log.Line(LogType.Info, "Packing images");
+                        {
+                            Log.Line(LogType.Info, "Saving packed image to '{0}'", savePath);
+                            finalImage.Write(savePath);
+                        }
+                    }
+                    catch (MagickOptionErrorException e)
+                    {
+                        Log.Exception(e);
+                        return false;
                     }
                 }
-                catch (MagickOptionErrorException e)
-                {
-                    Log.Exception(e);
-                    return false;
-                }
+            }
+            finally
+            {
+                foreach (MagickImage img in images)
+                    img?.Dispose();
             }
 
             return true;

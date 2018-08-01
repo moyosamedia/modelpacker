@@ -57,6 +57,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ModelPacker.BinPacker\ModelPacker.BinPacker.csproj">
+      <Project>{8a5bb0f2-68d4-42e7-ae55-9b8fe23ca94e}</Project>
+      <Name>ModelPacker.BinPacker</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ModelPacker.Logger\ModelPacker.Logger.csproj">
       <Project>{4ec652e4-64ed-48ee-901e-f33f88922f71}</Project>
       <Name>ModelPacker.Logger</Name>
