@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelPacker.Logger", "Model
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelPacker.Processor", "ModelPacker.Processor\ModelPacker.Processor.csproj", "{3E4CB375-2C38-4A62-AA0B-D8FD11C549FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelPacker.BinPacker", "ModelPacker.BinPacker\ModelPacker.BinPacker.csproj", "{8A5BB0F2-68D4-42E7-AE55-9B8FE23CA94E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{3E4CB375-2C38-4A62-AA0B-D8FD11C549FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E4CB375-2C38-4A62-AA0B-D8FD11C549FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E4CB375-2C38-4A62-AA0B-D8FD11C549FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A5BB0F2-68D4-42E7-AE55-9B8FE23CA94E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A5BB0F2-68D4-42E7-AE55-9B8FE23CA94E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A5BB0F2-68D4-42E7-AE55-9B8FE23CA94E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A5BB0F2-68D4-42E7-AE55-9B8FE23CA94E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
