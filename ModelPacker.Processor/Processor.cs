@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using System.IO;
 using Assimp.Unmanaged;
 using ImageMagick;
@@ -17,7 +16,8 @@ namespace ModelPacker.Processor
             Log.Line(LogType.Debug, "Creating output directory {0}", info.outputDir);
             Directory.CreateDirectory(info.outputDir);
 
-            if (!PackImages(info))
+            Block[] blocks;
+            if (!PackImages(info, out blocks))
             {
                 return false;
             }
@@ -25,18 +25,10 @@ namespace ModelPacker.Processor
             return false;
         }
 
-        private static bool PackImages(ProcessorInfo info)
+        private static bool PackImages(ProcessorInfo info, out Block[] blocks)
         {
             Log.Line(LogType.Info, "Starting packing process for {0} images", info.textures.Length);
-
-            Block[] blocks;
-            if (!MergeImages(info, out blocks)) return false;
-
-            return true;
-        }
-
-        private static bool MergeImages(ProcessorInfo info, out Block[] blocks)
-        {
+            
             bool keepTransparency = info.keepTransparency && info.textureOutputType != TextureFileType.JPG;
             MagickReadSettings readSettings = new MagickReadSettings
             {
