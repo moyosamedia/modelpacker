@@ -59,25 +59,26 @@ namespace ModelPacker.UI
 
         private void PopulateExportComboBox()
         {
-            ExportFormats.Items.Clear();
-            
+            // Models
+            ExportModelFormats.Items.Clear();
+
             IEnumerable<Utils.ExportFormats> modelExportFormats = Utils.GetModelExportFormats();
-            ExportFormats.Tag = modelExportFormats.Select(x => x.id).ToArray();
-            Debug.Assert(ExportFormats.Tag != null);
+            ExportModelFormats.Tag = modelExportFormats.Select(x => x.id).ToArray();
+            Debug.Assert(ExportModelFormats.Tag != null);
 
             foreach (Utils.ExportFormats format in modelExportFormats)
             {
-                ExportFormats.Items.Add(format.name);
+                ExportModelFormats.Items.Add(format.name);
             }
 
-            ExportFormats.SelectedIndex = 0;
+            ExportModelFormats.SelectedIndex = 0;
         }
 
         private void OnExportButtonClick(object sender, RoutedEventArgs e)
         {
             TextBlock.Text = string.Empty;
 
-            string[] exportIds = ExportFormats.Tag as string[];
+            string[] exportIds = ExportModelFormats.Tag as string[];
             Debug.Assert(exportIds != null);
             Debug.Assert(exportIds.Length > 0);
 
@@ -87,7 +88,7 @@ namespace ModelPacker.UI
                 textures = TextureFiles.files,
                 shouldMergeModels = DoMergeFiles.IsChecked == true,
                 keepTransparency = DoKeepTransparency.IsChecked == true,
-                modelExportFormatId = exportIds[ExportFormats.SelectedIndex],
+                modelExportFormatId = exportIds[ExportModelFormats.SelectedIndex],
                 outputFilesPrefix = FilesPrefix.Text,
                 outputDir = ExportDirectory.FullPath
             });

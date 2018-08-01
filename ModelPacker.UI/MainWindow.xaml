@@ -96,7 +96,7 @@
                         <ComboBox
                             Grid.Column="1"
                             Grid.Row="0"
-                            Name="ExportFormats">
+                            Name="ExportModelFormats">
                             <ComboBoxItem IsSelected="True">Collada (.dae)</ComboBoxItem>
                             <ComboBoxItem>Wavefront Object (.obj)</ComboBoxItem>
                             <ComboBoxItem>Stereolithography (.stl)</ComboBoxItem>
