@@ -16,15 +16,16 @@ namespace ModelPacker.Processor
             Log.Line(LogType.Debug, "Creating output directory {0}", info.outputDir);
             Directory.CreateDirectory(info.outputDir);
 
-            if (!PackImages(info, out Block[] imagePositions) || imagePositions == null || imagePositions.Length == 0)
+            if (!PackImages(info, out BinPacking imagePacker) || imagePacker.blocks == null || imagePacker.blocks.Length == 0)
             {
                 return false;
             }
 
+
             return false;
         }
 
-        private static bool PackImages(ProcessorInfo info, out Block[] imagePositions)
+        private static bool PackImages(ProcessorInfo info, out BinPacking imagePacker)
         {
             Log.Line(LogType.Info, "Starting packing process for {0} images", info.textures.Length);
 
@@ -35,33 +36,33 @@ namespace ModelPacker.Processor
             };
 
             MagickImage[] images = new MagickImage[info.textures.Length];
-            imagePositions = new Block[info.textures.Length];
+            Block[] blocks = new Block[info.textures.Length];
             for (int i = 0; i < info.textures.Length; i++)
             {
                 images[i] = new MagickImage(info.textures[i], readSettings);
-                imagePositions[i] = new Block(images[i].Width, images[i].Height);
+                blocks[i] = new Block(images[i].Width, images[i].Height);
             }
 
-            Array.Sort(images, imagePositions);
+            Array.Sort(images, blocks);
             Array.Reverse(images);
-            Array.Reverse(imagePositions);
+            Array.Reverse(blocks);
 
-            BinPacking packer = new BinPacking();
-            packer.Fit(imagePositions);
+            imagePacker = new BinPacking(blocks);
+            imagePacker.Fit();
 
-            Log.Line(LogType.Debug, "BinPacker: Root size: {{ width: {0}, height: {1} }}", packer.root.w,
-                packer.root.h);
+            Log.Line(LogType.Debug, "BinPacker: Root size: {{ width: {0}, height: {1} }}", imagePacker.root.w,
+                imagePacker.root.h);
 
             try
             {
                 using (MagickImage finalImage = new MagickImage(
                     readSettings.BackgroundColor,
-                    packer.root.w,
-                    packer.root.h))
+                    imagePacker.root.w,
+                    imagePacker.root.h))
                 {
-                    for (int i = 0; i < imagePositions.Length; i++)
+                    for (int i = 0; i < blocks.Length; i++)
                     {
-                        Block block = imagePositions[i];
+                        Block block = blocks[i];
                         if (block.fit != null)
                         {
                             Log.Line(LogType.Debug,

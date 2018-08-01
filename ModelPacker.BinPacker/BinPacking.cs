@@ -3,8 +3,15 @@ namespace ModelPacker.BinPacker
     public class BinPacking
     {
         public Node root { get; private set; }
+        
+        public Block[] blocks { get; }
 
-        public void Fit(Block[] blocks)
+        public BinPacking(Block[] blocks)
+        {
+            this.blocks = blocks;
+        }
+
+        public void Fit()
         {
             root = new Node
             {
