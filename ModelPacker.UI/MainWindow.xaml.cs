@@ -29,6 +29,8 @@ namespace ModelPacker.UI
             InitializeComponent();
 
             PopulateExportComboBox();
+            
+            // TODO: implement textureOutputType from ProcessorInfo
 
             Log.onLog = OnLogMessage;
         }

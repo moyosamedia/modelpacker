@@ -168,6 +168,8 @@ namespace ModelPacker.Processor
                             mesh.TextureCoordinateChannels[uvwChannel] = uvw;
                         }
                     }
+                    
+                    // TODO: Add merge models functionality
 
                     ExportFormatDescription exportformat = exportFormatDescriptions.FirstOrDefault(x =>
                         x.FormatId == info.modelExportFormatId);

@@ -54,6 +54,7 @@ namespace ModelPacker.UI.CustomControls
 
         public void Add(string file)
         {
+            // TODO: Sort FilesList based on file name
             if (!ContainsFile(file))
             {
                 FilesList.Items.Add(file);
