@@ -32,5 +32,10 @@ namespace ModelPacker.Logger
         {
             onLog?.Invoke(type, message);
         }
+
+        public static bool ShouldFilter(LogType log, LogType minLevel)
+        {
+            return (int) log < (int) minLevel;
+        }
     }
 }
