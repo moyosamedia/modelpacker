@@ -169,8 +169,14 @@ namespace ModelPacker.Processor
                         }
                     }
 
-                    ExportFormatDescription exportformat = exportFormatDescriptions.First(x =>
+                    ExportFormatDescription exportformat = exportFormatDescriptions.FirstOrDefault(x =>
                         x.FormatId == info.modelExportFormatId);
+
+                    if (exportformat == null)
+                    {
+                        Log.Line(LogType.Error, "Model export format {0} is not supported!", info.modelExportFormatId);
+                        return false;
+                    }
 
                     string savePath = Path.Combine(info.outputDir,
                         string.Format("{0}-{1}.{2}",
