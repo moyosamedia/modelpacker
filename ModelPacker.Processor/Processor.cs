@@ -16,8 +16,7 @@ namespace ModelPacker.Processor
             Log.Line(LogType.Debug, "Creating output directory {0}", info.outputDir);
             Directory.CreateDirectory(info.outputDir);
 
-            Block[] blocks;
-            if (!PackImages(info, out blocks))
+            if (!PackImages(info, out Block[] imagePositions) || imagePositions == null || imagePositions.Length == 0)
             {
                 return false;
             }
@@ -25,10 +24,10 @@ namespace ModelPacker.Processor
             return false;
         }
 
-        private static bool PackImages(ProcessorInfo info, out Block[] blocks)
+        private static bool PackImages(ProcessorInfo info, out Block[] imagePositions)
         {
             Log.Line(LogType.Info, "Starting packing process for {0} images", info.textures.Length);
-            
+
             bool keepTransparency = info.keepTransparency && info.textureOutputType != TextureFileType.JPG;
             MagickReadSettings readSettings = new MagickReadSettings
             {
@@ -36,21 +35,22 @@ namespace ModelPacker.Processor
             };
 
             MagickImage[] images = new MagickImage[info.textures.Length];
-            blocks = new Block[info.textures.Length];
+            imagePositions = new Block[info.textures.Length];
             for (int i = 0; i < info.textures.Length; i++)
             {
                 images[i] = new MagickImage(info.textures[i], readSettings);
-                blocks[i] = new Block(images[i].Width, images[i].Height);
+                imagePositions[i] = new Block(images[i].Width, images[i].Height);
             }
 
-            Array.Sort(images, blocks);
+            Array.Sort(images, imagePositions);
             Array.Reverse(images);
-            Array.Reverse(blocks);
+            Array.Reverse(imagePositions);
 
             BinPacking packer = new BinPacking();
-            packer.Fit(blocks);
+            packer.Fit(imagePositions);
 
-            Log.Line(LogType.Debug, "BinPacker: Root size: {{ width: {0}, height: {1} }}", packer.root.w, packer.root.h);
+            Log.Line(LogType.Debug, "BinPacker: Root size: {{ width: {0}, height: {1} }}", packer.root.w,
+                packer.root.h);
 
             try
             {
@@ -59,9 +59,9 @@ namespace ModelPacker.Processor
                     packer.root.w,
                     packer.root.h))
                 {
-                    for (int i = 0; i < blocks.Length; i++)
+                    for (int i = 0; i < imagePositions.Length; i++)
                     {
-                        Block block = blocks[i];
+                        Block block = imagePositions[i];
                         if (block.fit != null)
                         {
                             Log.Line(LogType.Debug,
@@ -74,7 +74,8 @@ namespace ModelPacker.Processor
                         }
                         else
                         {
-                            Log.Line(LogType.Warning, "BinPacker: Fit for '{0}' is null, it's not going to be in the final image",
+                            Log.Line(LogType.Warning,
+                                "BinPacker: Fit for '{0}' is null, it's not going to be in the final image",
                                 images[i].FileName);
                         }
                     }
