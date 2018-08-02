@@ -39,6 +39,7 @@ namespace ModelPacker.Processor
 
         private static bool PackImages(ProcessorInfo info, out BinPacking imagePacker)
         {
+            // TODO: Rename image variables to texture for consistency 
             Log.Line(LogType.Info, "Starting packing process for {0} images", info.textures.Length);
 
             bool keepTransparency = info.keepTransparency && info.textureOutputType != TextureFileType.JPG;
