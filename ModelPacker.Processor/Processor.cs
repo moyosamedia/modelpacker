@@ -181,7 +181,7 @@ namespace ModelPacker.Processor
                     }
 
                     string savePath = Path.Combine(info.outputDir,
-                        string.Format("{0}-{1}.{2}",
+                        string.Format("{0}-model-{1}.{2}",
                             info.outputFilesPrefix,
                             Path.GetFileNameWithoutExtension(modelPath),
                             exportformat.FileExtension));
