@@ -96,7 +96,7 @@ namespace ModelPacker.Processor
                     try
                     {
                         string savePath = Path.Combine(info.outputDir,
-                            string.Format("{0}-packed.{1}", info.outputFilesPrefix, info.textureOutputType));
+                            string.Format("{0}-textures.{1}", info.outputFilesPrefix, info.textureOutputType));
                         Log.Line(LogType.Info, "Saving packed image to '{0}'", savePath);
                         finalImage.Write(savePath);
                     }
