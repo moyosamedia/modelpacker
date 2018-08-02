@@ -88,8 +88,8 @@ namespace ModelPacker.UI
 
             Processor.Processor.Run(new ProcessorInfo
             {
-                models = ModelFiles.files,
-                textures = TextureFiles.files,
+                models = ModelFiles.files.ToArray(),
+                textures = TextureFiles.files.ToArray(),
                 shouldMergeModels = DoMergeFiles.IsChecked == true,
                 keepTransparency = DoKeepTransparency.IsChecked == true,
                 modelExportFormatId = exportIds[ExportModelFormats.SelectedIndex],
@@ -117,13 +117,13 @@ namespace ModelPacker.UI
             {
                 if (Utils.IsModelExtensionSupported(Path.GetExtension(droppedFile)))
                 {
-                    ModelFiles.Add(droppedFile);
+                    ModelFiles.Add(droppedFile, false);
                 }
                 else
                 {
                     if (Utils.IsImageSupported(droppedFile))
                     {
-                        TextureFiles.Add(droppedFile);
+                        TextureFiles.Add(droppedFile, false);
                     }
                     else
                     {
@@ -131,6 +131,8 @@ namespace ModelPacker.UI
                     }
                 }
             }
+            ModelFiles.RefreshList();
+            TextureFiles.RefreshList();
         }
     }
 }

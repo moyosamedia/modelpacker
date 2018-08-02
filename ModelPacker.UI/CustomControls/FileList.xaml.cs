@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
@@ -7,24 +9,13 @@ namespace ModelPacker.UI.CustomControls
 {
     public partial class FileList : UserControl
     {
-        public string[] files
-        {
-            get
-            {
-                ItemCollection items = FilesList.Items;
-                string[] retVal = new string[items.Count];
-                for (int i = 0; i < items.Count; i++)
-                {
-                    retVal[i] = items[i].ToString();
-                }
-
-                return retVal;
-            }
-        }
+        public List<string> files { get; private set; } = new List<string>();
+        public bool sort = true;
 
         public FileList()
         {
             InitializeComponent();
+            FilesList.ItemsSource = files;
         }
 
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
@@ -49,15 +40,18 @@ namespace ModelPacker.UI.CustomControls
                 {
                     Add(fileName);
                 }
+
+                RefreshList();
             }
         }
 
-        public void Add(string file)
+        public void Add(string file, bool refresh = true)
         {
-            // TODO: Sort FilesList based on file name
             if (!ContainsFile(file))
             {
-                FilesList.Items.Add(file);
+                files.Add(file);
+                if (refresh)
+                    RefreshList();
             }
         }
 
@@ -65,32 +59,32 @@ namespace ModelPacker.UI.CustomControls
         {
             if (FilesList.SelectedIndex > -1)
             {
-                while (FilesList.SelectedItems.Count > 0)
+                foreach (object filesListSelectedItem in FilesList.SelectedItems)
                 {
-                    FilesList.Items.RemoveAt(FilesList.SelectedIndex);
+                    files.Remove((string) filesListSelectedItem);
                 }
+
+                RefreshList();
             }
         }
 
         private void ClearButton_OnClick(object sender, RoutedEventArgs e)
         {
-            FilesList.Items.Clear();
+            files.Clear();
+            RefreshList();
         }
 
         public bool ContainsFile(string file)
         {
-            if (string.IsNullOrEmpty(file))
-                return false;
+            return !string.IsNullOrEmpty(file) && files.Any(x => x == file);
+        }
 
-            foreach (object item in FilesList.Items)
-            {
-                if (item as string == file)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+        public void RefreshList()
+        {
+            if (sort)
+                files = files.OrderBy(Path.GetFileNameWithoutExtension).ToList();
+            FilesList.ItemsSource = null;
+            FilesList.ItemsSource = files;
         }
     }
 }
