@@ -59,12 +59,14 @@
                         <Label
                             Grid.Column="0"
                             Grid.Row="0"
-                            Content="Merge Models" />
-                        <CheckBox 
+                            Content="Merge Models"
+                            IsEnabled="False" />
+                        <CheckBox
                             Grid.Column="1"
                             Grid.Row="0"
-                            Name="DoMergeFiles" />
-                        
+                            Name="DoMergeFiles"
+                            IsEnabled="False" />
+
                         <Label
                             Grid.Column="0"
                             Grid.Row="1"

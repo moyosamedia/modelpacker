@@ -90,7 +90,7 @@ namespace ModelPacker.UI
             {
                 models = ModelFiles.files.ToArray(),
                 textures = TextureFiles.files.ToArray(),
-                mergeModels = DoMergeFiles.IsChecked == true,
+                //mergeModels = DoMergeFiles.IsChecked == true,
                 keepTransparency = DoKeepTransparency.IsChecked == true,
                 modelExportFormatId = exportIds[ExportModelFormats.SelectedIndex],
                 textureOutputType = (TextureFileType) Enum.Parse(typeof(TextureFileType),

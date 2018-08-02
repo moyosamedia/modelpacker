@@ -26,7 +26,7 @@ namespace ModelPacker.CMD
                     @"D:\TEMP\tree_leaf_transparent_2.png",
                     @"D:\TEMP\GearVrController_color_128.tif"
                 },
-                mergeModels = true,
+                //mergeModels = true,
                 keepTransparency = true,
                 textureOutputType = TextureFileType.PNG,
                 modelExportFormatId = "obj",
