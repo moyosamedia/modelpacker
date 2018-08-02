@@ -121,6 +121,15 @@ namespace ModelPacker.Processor
             using (AssimpContext importer = new AssimpContext())
             {
                 ExportFormatDescription[] exportFormatDescriptions = importer.GetSupportedExportFormats();
+                ExportFormatDescription exportFormat = exportFormatDescriptions.FirstOrDefault(x =>
+                    x.FormatId == info.modelExportFormatId);
+
+                if (exportFormat == null)
+                {
+                    Log.Line(LogType.Error, "Model export format {0} is not supported!",
+                        info.modelExportFormatId);
+                    return false;
+                }
 
                 Log.Line(LogType.Info, "Shifting uv(w) positions of {0} models to their new location",
                     info.models.Length);
@@ -168,26 +177,15 @@ namespace ModelPacker.Processor
                             mesh.TextureCoordinateChannels[uvwChannel] = uvw;
                         }
                     }
-                    
-                    // TODO: Add merge models functionality
-
-                    ExportFormatDescription exportformat = exportFormatDescriptions.FirstOrDefault(x =>
-                        x.FormatId == info.modelExportFormatId);
-
-                    if (exportformat == null)
-                    {
-                        Log.Line(LogType.Error, "Model export format {0} is not supported!", info.modelExportFormatId);
-                        return false;
-                    }
 
                     string savePath = Path.Combine(info.outputDir,
                         string.Format("{0}-model-{1}.{2}",
                             info.outputFilesPrefix,
                             Path.GetFileNameWithoutExtension(modelPath),
-                            exportformat.FileExtension));
+                            exportFormat.FileExtension));
 
                     Log.Line(LogType.Info, "Saving edited model to '{0}'", savePath);
-                    importer.ExportFile(model, savePath, info.modelExportFormatId);
+                    importer.ExportFile(model, savePath, exportFormat.FormatId);
                 }
             }
 
