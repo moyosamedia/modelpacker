@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelPacker.CMD", "ModelPac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelPacker.BinPacker", "ModelPacker.BinPacker\ModelPacker.BinPacker.csproj", "{8A5BB0F2-68D4-42E7-AE55-9B8FE23CA94E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssimpNet.Interop.Generator", "assimp-net\AssimpNet.Interop.Generator\AssimpNet.Interop.Generator.csproj", "{EA4EF0BE-B8A9-4149-8B5A-7E353AD628C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssimpNet", "assimp-net\AssimpNet\AssimpNet.csproj", "{3415FF29-C0BE-44FC-AD34-94796118E690}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +40,13 @@ Global
 		{8A5BB0F2-68D4-42E7-AE55-9B8FE23CA94E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A5BB0F2-68D4-42E7-AE55-9B8FE23CA94E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A5BB0F2-68D4-42E7-AE55-9B8FE23CA94E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA4EF0BE-B8A9-4149-8B5A-7E353AD628C0}.Debug|Any CPU.ActiveCfg = Net20-Release|Any CPU
+		{EA4EF0BE-B8A9-4149-8B5A-7E353AD628C0}.Debug|Any CPU.Build.0 = Net20-Release|Any CPU
+		{EA4EF0BE-B8A9-4149-8B5A-7E353AD628C0}.Release|Any CPU.ActiveCfg = Net20-Release|Any CPU
+		{EA4EF0BE-B8A9-4149-8B5A-7E353AD628C0}.Release|Any CPU.Build.0 = Net20-Release|Any CPU
+		{3415FF29-C0BE-44FC-AD34-94796118E690}.Debug|Any CPU.ActiveCfg = Net20-Release|Any CPU
+		{3415FF29-C0BE-44FC-AD34-94796118E690}.Debug|Any CPU.Build.0 = Net20-Release|Any CPU
+		{3415FF29-C0BE-44FC-AD34-94796118E690}.Release|Any CPU.ActiveCfg = Net20-Release|Any CPU
+		{3415FF29-C0BE-44FC-AD34-94796118E690}.Release|Any CPU.Build.0 = Net20-Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -53,7 +53,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>xcopy /Y "$(ProjectDir)..\ModelPacker.Processor\bin\$(Configuration)\Assimp*.dll" "$(ProjectDir)$(OutputPath)"</PreBuildEvent>
+      <PostBuildEvent>xcopy /Y "$(ProjectDir)..\assimp-net\libs\Assimp\Assimp*.dll" "$(ProjectDir)$(OutputPath)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
