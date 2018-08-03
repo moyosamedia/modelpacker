@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using CommandLine;
+using CommandLine.Text;
 using ModelPacker.Logger;
 using ModelPacker.Processor;
 
@@ -10,46 +13,44 @@ namespace ModelPacker.CMD
         {
             Log.onLog = OnLog;
 
-            ProcessorInfo processorInfo = new ProcessorInfo
+            Parser parser = new Parser(with =>
             {
-                models = new[]
-                {
-                    @"D:\TEMP\GearVrController.fbx",
-                    @"D:\TEMP\tree_1_3.FBX",
-                    @"D:\TEMP\tree_1_3.FBX",
-                    @"D:\TEMP\tree_1_3.FBX"
-                },
-                textures = new[]
-                {
-                    @"D:\TEMP\GearVrController_color_128.tif",
-                    @"D:\TEMP\T0U6VPAN8-U45969Z62-bddd70681243-512.png",
-                    @"D:\TEMP\tree_leaf_transparent_2.png",
-                    @"D:\TEMP\GearVrController_color_128.tif"
-                },
-                //mergeModels = true,
-                keepTransparency = true,
-                textureOutputType = TextureFileType.PNG,
-                modelExportFormatId = "obj",
-                outputFilesPrefix = "test",
-                outputDir = @"D:\TEMP\"
-            };
+                with.EnableDashDash = true;
+                with.CaseInsensitiveEnumValues = true;
+                with.CaseSensitive = false;
+                with.EnableDashDash = true;
+                with.HelpWriter = Console.Out;
+            });
             try
             {
-                Processor.Processor.Run(processorInfo);
+                parser.ParseArguments<ArgumentOptions>(args)
+                    .WithParsed(x => Processor.Processor.Run(x))
+                    .WithNotParsed(HandleParseErrors);
             }
             catch (Exception e)
             {
                 Log.Exception(e);
             }
-            
-            Log.Line(LogType.Info, "Done");
+            finally
+            {
+                parser.Dispose();
+            }
+        }
+
+        private static void HandleParseErrors(IEnumerable<Error> errors)
+        {
+//            Log.Line(LogType.Error, "Failed to parse arguments:");
+//            foreach (Error error in errors)
+//            {
+//                Log.Line(error.StopsProcessing ? LogType.Error : LogType.Warning, error.Tag);
+//            }
         }
 
         private static void OnLog(LogType type, string message)
         {
             if (Log.ShouldFilter(type, LogType.Debug))
                 return;
-            
+
             switch (type)
             {
                 case LogType.Warning:

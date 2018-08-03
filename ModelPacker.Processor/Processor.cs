@@ -129,6 +129,10 @@ namespace ModelPacker.Processor
                 {
                     Log.Line(LogType.Error, "Model export format {0} is not supported!",
                         info.modelExportFormatId);
+                    Log.Line(LogType.Info, "Supported formats are:");
+                    foreach (ExportFormatDescription e in exportFormatDescriptions)
+                        Log.Line(LogType.Info, "{0} ({1})", e.FormatId, e.Description);
+
                     return false;
                 }
 
