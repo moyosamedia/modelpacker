@@ -56,6 +56,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
                         <Label
                             Grid.Column="0"
@@ -67,14 +68,25 @@
                             Grid.Row="0"
                             Name="DoMergeFiles"
                             IsEnabled="False" />
-
+                        
                         <Label
                             Grid.Column="0"
                             Grid.Row="1"
+                            Content="Padding"
+                            IsEnabled="False" />
+                        <Controls:NumericUpDown
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            IsEnabled="False"
+                            Value="0"/>
+
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="2"
                             Content="Keep Transparency" />
                         <CheckBox
                             Grid.Column="1"
-                            Grid.Row="1"
+                            Grid.Row="2"
                             Name="DoKeepTransparency" />
                     </Grid>
                 </DockPanel>
