@@ -53,6 +53,7 @@ namespace ModelPacker.UI
             }
 
             textBlock.Inlines.Add(run);
+            textBlock.Inlines.Add(new LineBreak());
         }
 
         private void PopulateExportComboBoxes()
