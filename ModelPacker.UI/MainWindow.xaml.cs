@@ -28,9 +28,11 @@ namespace ModelPacker.UI
 
             InitializeComponent();
 
-            PopulateExportComboBoxes();
-
             Log.onLog = OnLogMessage;
+
+            PopulateExportComboBoxes();
+            ModelFiles.predicate = file => Utils.IsModelExtensionSupported(Path.GetExtension(file));
+            TextureFiles.predicate = Utils.IsImageSupported;
         }
 
         private void OnLogMessage(LogType type, string message)
@@ -132,6 +134,7 @@ namespace ModelPacker.UI
                     }
                 }
             }
+
             ModelFiles.RefreshList();
             TextureFiles.RefreshList();
         }

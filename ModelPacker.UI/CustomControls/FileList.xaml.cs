@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
+using ModelPacker.Logger;
 
 namespace ModelPacker.UI.CustomControls
 {
@@ -11,6 +13,8 @@ namespace ModelPacker.UI.CustomControls
     {
         public List<string> files { get; private set; } = new List<string>();
         public bool sort = true;
+
+        public Func<string, bool> predicate;
 
         public FileList()
         {
@@ -49,6 +53,12 @@ namespace ModelPacker.UI.CustomControls
         {
             if (!ContainsFile(file))
             {
+                if (predicate != null && !predicate(file))
+                {
+                    Log.Line(LogType.Warning, "File '{0}' is not allowed in this list", file);
+                    return;
+                }
+
                 files.Add(file);
                 if (refresh)
                     RefreshList();
