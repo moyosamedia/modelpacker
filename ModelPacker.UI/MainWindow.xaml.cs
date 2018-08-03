@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using MahApps.Metro;
 using ModelPacker.Logger;
 using ModelPacker.Processor;
 
@@ -21,6 +23,9 @@ namespace ModelPacker.UI
 
         public static TextBlock textBlock => instance.InfoText;
 
+        public static string uiAccentColor => ConfigurationManager.AppSettings["accentColor"];
+        public static string uiTheme => ConfigurationManager.AppSettings["theme"];
+
         public MainWindow()
         {
             Debug.Assert(instance == null);
@@ -33,6 +38,15 @@ namespace ModelPacker.UI
             PopulateExportComboBoxes();
             ModelFiles.predicate = file => Utils.IsModelExtensionSupported(Path.GetExtension(file));
             TextureFiles.predicate = Utils.IsImageSupported;
+            
+            UpdateTheme();
+        }
+
+        public void UpdateTheme()
+        {
+            ThemeManager.ChangeAppStyle(this,
+                ThemeManager.GetAccent(uiAccentColor),
+                ThemeManager.GetAppTheme(uiTheme));
         }
 
         private void OnLogMessage(LogType type, string message)
