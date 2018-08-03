@@ -1,4 +1,4 @@
-﻿<Window x:Class="ModelPacker.UI.MainWindow"
+﻿<Controls:MetroWindow x:Class="ModelPacker.UI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,8 +6,9 @@
         xmlns:customControls="clr-namespace:ModelPacker.UI.CustomControls"
         mc:Ignorable="d"
         Title="Model Packer" Height="700" Width="500"
-        Drop="Window_Drop">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        Drop="Window_Drop"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
             <GroupBox Header="Input">
                 <DockPanel AllowDrop="True">
@@ -71,7 +72,7 @@
                             Grid.Column="0"
                             Grid.Row="1"
                             Content="Keep Transparency" />
-                        <CheckBox 
+                        <CheckBox
                             Grid.Column="1"
                             Grid.Row="1"
                             Name="DoKeepTransparency" />
@@ -160,4 +161,4 @@
                 Click="OnExportButtonClick" />
         </StackPanel>
     </ScrollViewer>
-</Window>
+</Controls:MetroWindow>

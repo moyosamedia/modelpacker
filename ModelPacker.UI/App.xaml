@@ -4,11 +4,23 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <system:Double x:Key="LabelWidth">125.0</system:Double>
-        <system:Double x:Key="SideButtonWidth">50.0</system:Double>
-        <system:String x:Key="FileBrowseButtonText">Browse</system:String>
-        <system:String x:Key="FileAddButtonText">Add</system:String>
-        <system:String x:Key="FileRemoveButtonText">Remove</system:String>
-        <system:String x:Key="ClearButtonText">Clear</system:String>
+        <ResourceDictionary>
+            <system:Double x:Key="LabelWidth">125.0</system:Double>
+            <system:Double x:Key="SideButtonWidth">60.0</system:Double>
+            <system:String x:Key="FileBrowseButtonText">Browse</system:String>
+            <system:String x:Key="FileAddButtonText">Add</system:String>
+            <system:String x:Key="FileRemoveButtonText">Remove</system:String>
+            <system:String x:Key="ClearButtonText">Clear</system:String>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <!-- Accent and AppTheme setting -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
