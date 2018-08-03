@@ -19,7 +19,7 @@ namespace ModelPacker.UI
     {
         private static MainWindow instance;
 
-        public static TextBlock TextBlock => instance.InfoText;
+        public static TextBlock textBlock => instance.InfoText;
 
         public MainWindow()
         {
@@ -52,7 +52,7 @@ namespace ModelPacker.UI
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
 
-            TextBlock.Inlines.Add(run);
+            textBlock.Inlines.Add(run);
         }
 
         private void PopulateExportComboBoxes()
@@ -80,7 +80,7 @@ namespace ModelPacker.UI
 
         private void OnExportButtonClick(object sender, RoutedEventArgs e)
         {
-            TextBlock.Text = string.Empty;
+            textBlock.Text = string.Empty;
 
             string[] exportIds = ExportModelFormats.Tag as string[];
             Debug.Assert(exportIds != null);
