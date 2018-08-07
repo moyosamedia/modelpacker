@@ -1,12 +1,12 @@
 namespace ModelPacker.BinPacker
 {
-    public class BinPacking
+    public class BinPacking<T>
     {
         public Node root { get; private set; }
         
-        public Block[] blocks { get; }
+        public Block<T>[] blocks { get; }
 
-        public BinPacking(Block[] blocks)
+        public BinPacking(Block<T>[] blocks)
         {
             this.blocks = blocks;
         }
@@ -22,7 +22,7 @@ namespace ModelPacker.BinPacker
             };
 
             Node node;
-            foreach (Block block in blocks)
+            foreach (Block<T> block in blocks)
             {
                 node = FindNode(root, block.w, block.h);
                 if (node != null)

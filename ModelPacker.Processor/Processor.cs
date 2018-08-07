@@ -19,7 +19,7 @@ namespace ModelPacker.Processor
             Log.Line(LogType.Debug, "Creating output directory {0}", info.outputDir);
             Directory.CreateDirectory(info.outputDir);
 
-            if (!PackImages(info, out BinPacking imagePacker) || imagePacker.blocks == null ||
+            if (!PackImages(info, out BinPacking<int> imagePacker) || imagePacker.blocks == null ||
                 imagePacker.blocks.Length == 0)
             {
                 Log.Line(LogType.Error, "Failed to process the textures");
@@ -37,7 +37,7 @@ namespace ModelPacker.Processor
             return false;
         }
 
-        private static bool PackImages(ProcessorInfo info, out BinPacking imagePacker)
+        private static bool PackImages(ProcessorInfo info, out BinPacking<int> imagePacker)
         {
             // TODO: Rename image variables to texture for consistency 
             Log.Line(LogType.Info, "Starting packing process for {0} images", info.textures.Length);
@@ -49,18 +49,18 @@ namespace ModelPacker.Processor
             };
 
             MagickImage[] images = new MagickImage[info.textures.Length];
-            Block[] blocks = new Block[info.textures.Length];
+            Block<int>[] blocks = new Block<int>[info.textures.Length];
             for (int i = 0; i < info.textures.Length; i++)
             {
                 images[i] = new MagickImage(info.textures[i], readSettings);
-                blocks[i] = new Block(images[i].Width, images[i].Height);
+                blocks[i] = new Block<int>(images[i].Width, images[i].Height, i);
             }
 
             Array.Sort(images, blocks);
             Array.Reverse(images);
             Array.Reverse(blocks);
 
-            imagePacker = new BinPacking(blocks);
+            imagePacker = new BinPacking<int>(blocks);
             imagePacker.Fit();
 
             Log.Line(LogType.Debug, "BinPacker: Root size: {{ width: {0}, height: {1} }}", imagePacker.root.w,
@@ -75,7 +75,7 @@ namespace ModelPacker.Processor
                 {
                     for (int i = 0; i < blocks.Length; i++)
                     {
-                        Block block = blocks[i];
+                        Block<int> block = blocks[i];
                         if (block.fit != null)
                         {
                             Log.Line(LogType.Debug,
@@ -117,7 +117,7 @@ namespace ModelPacker.Processor
             return true;
         }
 
-        private static bool PackModels(ProcessorInfo info, BinPacking imagePacker)
+        private static bool PackModels(ProcessorInfo info, BinPacking<int> imagePacker)
         {
             using (AssimpContext importer = new AssimpContext())
             {
@@ -157,10 +157,11 @@ namespace ModelPacker.Processor
 
                         // TODO: Add support for offsetting uvs per mesh instead of per model file
                         // Thus having 1 texture per mesh instead of having 1 texture per model file
-                        float scaleX = imagePacker.blocks[i].w / (float) imagePacker.root.w;
-                        float scaleY = imagePacker.blocks[i].h / (float) imagePacker.root.h;
-                        float offsetX = imagePacker.blocks[i].fit.x / (float) imagePacker.root.w;
-                        float offsetY = imagePacker.blocks[i].fit.y / (float) imagePacker.root.h;
+                        Block<int> block = imagePacker.blocks.First(x => x.data == i);
+                        float scaleX = block.w / (float) imagePacker.root.w;
+                        float scaleY = block.h / (float) imagePacker.root.h;
+                        float offsetX = block.fit.x / (float) imagePacker.root.w;
+                        float offsetY = block.fit.y / (float) imagePacker.root.h;
                         offsetY = 1 - offsetY; // This is because the uv 0,0 is in the bottom left
 
                         Log.Line(LogType.Debug, "Calculated scaling multipliers: x: {0}; y: {1}", scaleX, scaleY);
