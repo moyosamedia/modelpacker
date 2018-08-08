@@ -38,7 +38,7 @@ namespace ModelPacker.UI
             PopulateExportComboBoxes();
             ModelFiles.predicate = file => Utils.IsModelExtensionSupported(Path.GetExtension(file));
             TextureFiles.predicate = Utils.IsImageSupported;
-            
+
             UpdateTheme();
         }
 
@@ -99,22 +99,7 @@ namespace ModelPacker.UI
         {
             textBlock.Text = string.Empty;
 
-            string[] exportIds = ExportModelFormats.Tag as string[];
-            Debug.Assert(exportIds != null);
-            Debug.Assert(exportIds.Length > 0);
-
-            Processor.Processor.Run(new ProcessorInfo
-            {
-                models = ModelFiles.files.ToArray(),
-                textures = TextureFiles.files.ToArray(),
-                //mergeModels = DoMergeFiles.IsChecked == true,
-                keepTransparency = DoKeepTransparency.IsChecked == true,
-                modelExportFormatId = exportIds[ExportModelFormats.SelectedIndex],
-                textureOutputType = (TextureFileType) Enum.Parse(typeof(TextureFileType),
-                    ExportTextureFormats.SelectedItem.ToString()),
-                outputFilesPrefix = FilesPrefix.Text,
-                outputDir = ExportDirectory.FullPath
-            });
+            Processor.Processor.Run(CreateProcessorInfo());
         }
 
         private void Window_Drop(object sender, DragEventArgs e)
@@ -151,6 +136,26 @@ namespace ModelPacker.UI
 
             ModelFiles.RefreshList();
             TextureFiles.RefreshList();
+        }
+
+        private ProcessorInfo CreateProcessorInfo()
+        {
+            string[] exportIds = ExportModelFormats.Tag as string[];
+            Debug.Assert(exportIds != null);
+            Debug.Assert(exportIds.Length > 0);
+            
+            return new ProcessorInfo
+            {
+                models = ModelFiles.files.ToArray(),
+                textures = TextureFiles.files.ToArray(),
+                //mergeModels = DoMergeFiles.IsChecked == true,
+                keepTransparency = DoKeepTransparency.IsChecked == true,
+                modelExportFormatId = exportIds[ExportModelFormats.SelectedIndex],
+                textureOutputType = (TextureFileType) Enum.Parse(typeof(TextureFileType),
+                    ExportTextureFormats.SelectedItem.ToString()),
+                outputFilesPrefix = FilesPrefix.Text,
+                outputDir = ExportDirectory.FullPath
+            };
         }
     }
 }
