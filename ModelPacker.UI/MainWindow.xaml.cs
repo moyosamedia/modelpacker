@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Xml;
 using System.Xml.Serialization;
 using MahApps.Metro;
+using Microsoft.Win32;
 using ModelPacker.Logger;
 using ModelPacker.Processor;
 
@@ -166,6 +167,49 @@ namespace ModelPacker.UI
                 outputFilesPrefix = FilesPrefix.Text,
                 outputDir = ExportDirectory.FullPath
             };
+        }
+
+        private void PopulateFromProcessorInfo(ProcessorInfo info)
+        {
+            ModelFiles.files.Clear();
+            foreach (string m in info.models)
+                ModelFiles.Add(m, false);
+            ModelFiles.RefreshList();
+
+            TextureFiles.files.Clear();
+            foreach (string t in info.textures)
+                TextureFiles.Add(t, false);
+            TextureFiles.RefreshList();
+
+            DoKeepTransparency.IsChecked = info.keepTransparency;
+
+            string[] exportIds = (string[]) ExportModelFormats.Tag;
+            ExportModelFormats.SelectedIndex = Array.IndexOf(exportIds, info.modelExportFormatId);
+            ExportTextureFormats.SelectedIndex = (int) info.textureOutputType;
+
+            FilesPrefix.Text = info.outputFilesPrefix;
+            ExportDirectory.FullPath = info.outputDir;
+        }
+
+        private void OnLoadButtonClick(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Multiselect = false,
+                CheckFileExists = true,
+                CheckPathExists = true,
+                InitialDirectory = System.Reflection.Assembly.GetEntryAssembly().Location,
+                RestoreDirectory = true,
+            };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(ProcessorInfo));
+                using (XmlReader reader = XmlReader.Create(openFileDialog.FileName))
+                {
+                    ProcessorInfo info = (ProcessorInfo) serializer.Deserialize(reader);
+                    PopulateFromProcessorInfo(info);
+                }
+            }
         }
     }
 }

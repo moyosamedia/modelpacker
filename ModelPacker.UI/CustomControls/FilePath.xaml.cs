@@ -10,7 +10,11 @@ namespace ModelPacker.UI.CustomControls
     {
         public bool SelectDirectory { get; set; }
 
-        public string FullPath => Path.Text;
+        public string FullPath
+        {
+            get => Path.Text;
+            set => Path.Text = value;
+        }
 
         public FilePath()
         {
