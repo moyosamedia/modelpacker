@@ -76,8 +76,10 @@ namespace ModelPacker.CMD
 
         private static void OnLog(LogType type, string message)
         {
-            if (Log.ShouldFilter(type, LogType.Debug))
+#if !DEBUG
+            if (Log.ShouldFilter(type, LogType.Info))
                 return;
+#endif
 
             switch (type)
             {

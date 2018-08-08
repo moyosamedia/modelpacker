@@ -54,6 +54,10 @@ namespace ModelPacker.UI
 
         private void OnLogMessage(LogType type, string message)
         {
+#if !DEBUG
+            if(Log.ShouldFilter(type, LogType.Info))
+                return;
+#endif
             Run run = new Run(string.Format("[{0}] {1}", type, message));
             switch (type)
             {
