@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AssimpNet, Version=3.3.2.0, Culture=neutral, PublicKeyToken=3edc10cb77b1bca2">
-      <HintPath>bin\Release\AssimpNet.dll</HintPath>
-    </Reference>
     <Reference Include="Magick.NET-Q8-AnyCPU, Version=7.5.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec">
       <HintPath>..\packages\Magick.NET-Q8-AnyCPU.7.5.0.1\lib\net40\Magick.NET-Q8-AnyCPU.dll</HintPath>
       <Private>True</Private>
@@ -56,6 +53,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\assimp-net\AssimpNet\AssimpNet.csproj">
+      <Project>{3415ff29-c0be-44fc-ad34-94796118e690}</Project>
+      <Name>AssimpNet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ModelPacker.BinPacker\ModelPacker.BinPacker.csproj">
       <Project>{8a5bb0f2-68d4-42e7-ae55-9b8fe23ca94e}</Project>
       <Name>ModelPacker.BinPacker</Name>
