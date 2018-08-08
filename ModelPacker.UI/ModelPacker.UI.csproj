@@ -134,6 +134,7 @@
     <PostBuildEvent>
             mkdir "$(ProjectDir)$(OutputPath)bin"
             move "$(ProjectDir)$(OutputPath)*.dll" "$(ProjectDir)$(OutputPath)bin"
+            rm "$(ProjectDir)$(OutputPath)bin\Assimp*.dll"
             move "$(ProjectDir)$(OutputPath)*.xml" "$(ProjectDir)$(OutputPath)bin"
             move "$(ProjectDir)$(OutputPath)*.pdb" "$(ProjectDir)$(OutputPath)bin"
             move "$(ProjectDir)$(OutputPath)bin\*.UI.*" "$(ProjectDir)$(OutputPath)"
