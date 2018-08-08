@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 using CommandLine;
 using CommandLine.Text;
 using ModelPacker.Logger;
@@ -24,7 +27,17 @@ namespace ModelPacker.CMD
             try
             {
                 parser.ParseArguments<ArgumentOptions>(args)
-                    .WithParsed(x => Processor.Processor.Run(x))
+                    .WithParsed(x =>
+                    {
+                        ProcessorInfo info = (ProcessorInfo) x;
+                        XmlSerializer serializer = new XmlSerializer(info.GetType());
+                        string savePath = Path.Combine(info.outputDir,
+                            string.Format("{0}-settings.xml", info.outputFilesPrefix));
+                        using (XmlWriter writer = XmlWriter.Create(savePath))
+                            serializer.Serialize(writer, info);
+
+                        Processor.Processor.Run(info);
+                    })
                     .WithNotParsed(HandleParseErrors);
             }
             catch (Exception e)

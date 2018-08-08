@@ -8,6 +8,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Xml;
+using System.Xml.Serialization;
 using MahApps.Metro;
 using ModelPacker.Logger;
 using ModelPacker.Processor;
@@ -99,7 +101,15 @@ namespace ModelPacker.UI
         {
             textBlock.Text = string.Empty;
 
-            Processor.Processor.Run(CreateProcessorInfo());
+            ProcessorInfo processorInfo = CreateProcessorInfo();
+
+            XmlSerializer serializer = new XmlSerializer(processorInfo.GetType());
+            string savePath = Path.Combine(processorInfo.outputDir,
+                string.Format("{0}-settings.xml", processorInfo.outputFilesPrefix));
+            using (XmlWriter writer = XmlWriter.Create(savePath))
+                serializer.Serialize(writer, processorInfo);
+
+            Processor.Processor.Run(processorInfo);
         }
 
         private void Window_Drop(object sender, DragEventArgs e)
@@ -143,7 +153,7 @@ namespace ModelPacker.UI
             string[] exportIds = ExportModelFormats.Tag as string[];
             Debug.Assert(exportIds != null);
             Debug.Assert(exportIds.Length > 0);
-            
+
             return new ProcessorInfo
             {
                 models = ModelFiles.files.ToArray(),
