@@ -162,7 +162,7 @@ namespace ModelPacker.Processor
                         float scaleY = block.h / (float) imagePacker.root.h;
                         float offsetX = block.fit.x / (float) imagePacker.root.w;
                         float offsetY = block.fit.y / (float) imagePacker.root.h;
-                        offsetY = 1 - offsetY; // This is because the uv 0,0 is in the bottom left
+                        offsetY = 1 - offsetY - scaleY; // This is because the uv 0,0 is in the bottom left
 
                         Log.Line(LogType.Debug, "Calculated scaling multipliers: x: {0}; y: {1}", scaleX, scaleY);
                         Log.Line(LogType.Debug, "Calculated offsets: x: {0}; y: {1}", offsetX, offsetY);
