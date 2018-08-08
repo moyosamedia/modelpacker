@@ -9,10 +9,10 @@ namespace ModelPacker.CMD
     [Verb("options")]
     public class ProcessorInfoArguments
     {
-        [Option(Separator = ';', Min = 2, HelpText = "The models to pack.")]
+        [Option(Separator = ';', Required = true, Min = 2, HelpText = "The models to pack.")]
         public IEnumerable<string> models { get; set; }
 
-        [Option(Separator = ';', Min = 2, HelpText
+        [Option(Separator = ';', Required = true, Min = 2, HelpText
             = "The textures to pack. " +
               "It assumes there is 1 texture per 1 model file. " +
               "If there are multiple meshes in 1 file, it will assume there 1 texture for all of them.")]
@@ -23,7 +23,7 @@ namespace ModelPacker.CMD
             "Should we keep the transparency in the output texture. If using JPG as 'textureOutputType' this will be ignored.")]
         public bool keepTransparency { get; set; }
 
-        [Option(Required = true, HelpText = "What the format of the output texture should be (PNG/JPG/HDR/TIFF).")]
+        [Option(HelpText = "What the format of the output texture should be (PNG/JPG/HDR/TIFF).")]
         public TextureFileType textureOutputType { get; set; }
 
         [Option(Required = true, HelpText = "The format in which the model should be exported e.g. obj or fbx.")]
