@@ -204,6 +204,7 @@ namespace ModelPacker.UI
                 CheckPathExists = true,
                 InitialDirectory = System.Reflection.Assembly.GetEntryAssembly().Location,
                 RestoreDirectory = true,
+                Filter = "Settings File|*.xml|All Files|*.*"
             };
             if (openFileDialog.ShowDialog() == true)
             {
