@@ -19,14 +19,14 @@ namespace ModelPacker.Processor
             Log.Line(LogType.Debug, "Creating output directory {0}", info.outputDir);
             Directory.CreateDirectory(info.outputDir);
 
-            if (!PackImages(info, out BinPacking<int> imagePacker) || imagePacker.blocks == null ||
-                imagePacker.blocks.Length == 0)
+            if (!PackTextures(info, out BinPacking<int> texturePacker) || texturePacker.blocks == null ||
+                texturePacker.blocks.Length == 0)
             {
                 Log.Line(LogType.Error, "Failed to process the textures");
                 return false;
             }
 
-            if (!PackModels(info, imagePacker))
+            if (!PackModels(info, texturePacker))
             {
                 Log.Line(LogType.Error, "Failed to process the models");
                 return false;
@@ -37,10 +37,9 @@ namespace ModelPacker.Processor
             return false;
         }
 
-        private static bool PackImages(ProcessorInfo info, out BinPacking<int> imagePacker)
+        private static bool PackTextures(ProcessorInfo info, out BinPacking<int> texturePacker)
         {
-            // TODO: Rename image variables to texture for consistency 
-            Log.Line(LogType.Info, "Starting packing process for {0} images", info.textures.Length);
+            Log.Line(LogType.Info, "Starting packing process for {0} textures", info.textures.Length);
 
             bool keepTransparency = info.keepTransparency && info.textureOutputType != TextureFileType.JPG;
             MagickReadSettings readSettings = new MagickReadSettings
@@ -48,30 +47,30 @@ namespace ModelPacker.Processor
                 BackgroundColor = keepTransparency ? new MagickColor(0, 0, 0, 0) : MagickColors.Black
             };
 
-            MagickImage[] images = new MagickImage[info.textures.Length];
+            MagickImage[] textures = new MagickImage[info.textures.Length];
             Block<int>[] blocks = new Block<int>[info.textures.Length];
             for (int i = 0; i < info.textures.Length; i++)
             {
-                images[i] = new MagickImage(info.textures[i], readSettings);
-                blocks[i] = new Block<int>(images[i].Width, images[i].Height, i);
+                textures[i] = new MagickImage(info.textures[i], readSettings);
+                blocks[i] = new Block<int>(textures[i].Width, textures[i].Height, i);
             }
 
-            Array.Sort(images, blocks);
-            Array.Reverse(images);
+            Array.Sort(textures, blocks);
+            Array.Reverse(textures);
             Array.Reverse(blocks);
 
-            imagePacker = new BinPacking<int>(blocks);
-            imagePacker.Fit();
+            texturePacker = new BinPacking<int>(blocks);
+            texturePacker.Fit();
 
-            Log.Line(LogType.Debug, "BinPacker: Root size: {{ width: {0}, height: {1} }}", imagePacker.root.w,
-                imagePacker.root.h);
+            Log.Line(LogType.Debug, "BinPacker: Root size: {{ width: {0}, height: {1} }}", texturePacker.root.w,
+                texturePacker.root.h);
 
             try
             {
-                using (MagickImage finalImage = new MagickImage(
+                using (MagickImage finalTexture = new MagickImage(
                     readSettings.BackgroundColor,
-                    imagePacker.root.w,
-                    imagePacker.root.h))
+                    texturePacker.root.w,
+                    texturePacker.root.h))
                 {
                     for (int i = 0; i < blocks.Length; i++)
                     {
@@ -80,17 +79,17 @@ namespace ModelPacker.Processor
                         {
                             Log.Line(LogType.Debug,
                                 "BinPacker: {0}: {{ pos: {{ x: {1}, y: {2} }}, size: {{ width: {3}, height: {4} }}}}",
-                                images[i].FileName,
+                                textures[i].FileName,
                                 block.fit.x, block.fit.y,
                                 block.w, block.h);
 
-                            finalImage.Composite(images[i], block.fit.x, block.fit.y, CompositeOperator.Copy);
+                            finalTexture.Composite(textures[i], block.fit.x, block.fit.y, CompositeOperator.Copy);
                         }
                         else
                         {
                             Log.Line(LogType.Warning,
-                                "BinPacker: Fit for '{0}' is null, it's not going to be in the final image",
-                                images[i].FileName);
+                                "BinPacker: Fit for '{0}' is null, it's not going to be in the final texture",
+                                textures[i].FileName);
                         }
                     }
 
@@ -98,8 +97,8 @@ namespace ModelPacker.Processor
                     {
                         string savePath = Path.Combine(info.outputDir,
                             string.Format("{0}-textures.{1}", info.outputFilesPrefix, info.textureOutputType));
-                        Log.Line(LogType.Info, "Saving packed image to '{0}'", savePath);
-                        finalImage.Write(savePath);
+                        Log.Line(LogType.Info, "Saving packed texture to '{0}'", savePath);
+                        finalTexture.Write(savePath);
                     }
                     catch (MagickOptionErrorException e)
                     {
@@ -110,14 +109,14 @@ namespace ModelPacker.Processor
             }
             finally
             {
-                foreach (MagickImage img in images)
-                    img?.Dispose();
+                foreach (MagickImage tex in textures)
+                    tex?.Dispose();
             }
 
             return true;
         }
 
-        private static bool PackModels(ProcessorInfo info, BinPacking<int> imagePacker)
+        private static bool PackModels(ProcessorInfo info, BinPacking<int> texturePacker)
         {
             using (AssimpContext importer = new AssimpContext())
             {
@@ -157,11 +156,11 @@ namespace ModelPacker.Processor
 
                         // TODO: Add support for offsetting uvs per mesh instead of per model file
                         // Thus having 1 texture per mesh instead of having 1 texture per model file
-                        Block<int> block = imagePacker.blocks.First(x => x.data == i);
-                        float scaleX = block.w / (float) imagePacker.root.w;
-                        float scaleY = block.h / (float) imagePacker.root.h;
-                        float offsetX = block.fit.x / (float) imagePacker.root.w;
-                        float offsetY = block.fit.y / (float) imagePacker.root.h;
+                        Block<int> block = texturePacker.blocks.First(x => x.data == i);
+                        float scaleX = block.w / (float) texturePacker.root.w;
+                        float scaleY = block.h / (float) texturePacker.root.h;
+                        float offsetX = block.fit.x / (float) texturePacker.root.w;
+                        float offsetY = block.fit.y / (float) texturePacker.root.h;
                         offsetY = 1 - offsetY - scaleY; // This is because the uv 0,0 is in the bottom left
 
                         Log.Line(LogType.Debug, "Calculated scaling multipliers: x: {0}; y: {1}", scaleX, scaleY);
