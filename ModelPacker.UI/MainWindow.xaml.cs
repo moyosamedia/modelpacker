@@ -42,6 +42,17 @@ namespace ModelPacker.UI
             ModelFiles.predicate = file => Utils.IsModelExtensionSupported(Path.GetExtension(file));
             TextureFiles.predicate = Utils.IsImageSupported;
 
+            ModelFiles.dialogFilter = "Models|";
+            bool first = true;
+            foreach (string ext in Utils.GetModelExportExtensions())
+            {
+                ModelFiles.dialogFilter += (!first ? ";" : "") + "*" + ext;
+                first = false;
+            }
+
+            ModelFiles.dialogFilter += "|All Files|*.*";
+
+
             UpdateTheme();
         }
 
@@ -55,7 +66,7 @@ namespace ModelPacker.UI
         private void OnLogMessage(LogType type, string message)
         {
 #if !DEBUG
-            if(Log.ShouldFilter(type, LogType.Info))
+            if (Log.ShouldFilter(type, LogType.Info))
                 return;
 #endif
             Run run = new Run(string.Format("[{0}] {1}", type, message));

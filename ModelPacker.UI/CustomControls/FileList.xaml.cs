@@ -16,6 +16,8 @@ namespace ModelPacker.UI.CustomControls
 
         public Func<string, bool> predicate;
 
+        public string dialogFilter;
+
         public FileList()
         {
             InitializeComponent();
@@ -36,7 +38,8 @@ namespace ModelPacker.UI.CustomControls
                 InitialDirectory = !string.IsNullOrEmpty(lastAddedFile)
                     ? new FileInfo(lastAddedFile).DirectoryName
                     : System.Reflection.Assembly.GetEntryAssembly().Location,
-                RestoreDirectory = true
+                RestoreDirectory = true,
+                Filter = dialogFilter
             };
             if (openFileDialog.ShowDialog() == true)
             {

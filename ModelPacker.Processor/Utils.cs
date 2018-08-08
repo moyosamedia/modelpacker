@@ -44,6 +44,15 @@ namespace ModelPacker.Processor
             }
         }
 
+        public static IEnumerable<string> GetModelExportExtensions()
+        {
+            ExportFormatDescription[] exportFormatDescriptions = AssimpLibrary.Instance.GetExportFormatDescriptions();
+            foreach (ExportFormatDescription exportFormatDescription in exportFormatDescriptions)
+            {
+                yield return exportFormatDescription.FileExtension;
+            }
+        }
+
         public struct ExportFormats
         {
             public string name;
