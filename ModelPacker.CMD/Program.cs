@@ -26,8 +26,8 @@ namespace ModelPacker.CMD
             });
             try
             {
-                parser.ParseArguments<ArgumentOptions>(args)
-                    .WithParsed(x =>
+                parser.ParseArguments<ProcessorInfoArguments, SettingsFileArgument>(args)
+                    .WithParsed<ProcessorInfoArguments>(x =>
                     {
                         ProcessorInfo info = (ProcessorInfo) x;
                         XmlSerializer serializer = new XmlSerializer(info.GetType());
@@ -37,6 +37,21 @@ namespace ModelPacker.CMD
                             serializer.Serialize(writer, info);
 
                         Processor.Processor.Run(info);
+                    })
+                    .WithParsed<SettingsFileArgument>(x =>
+                    {
+                        if (!File.Exists(x.file))
+                        {
+                            Log.Line(LogType.Error, "Could not find settings file '{0}'", x.file);
+                            return;
+                        }
+
+                        XmlSerializer serializer = new XmlSerializer(typeof(ProcessorInfo));
+                        using (XmlReader reader = XmlReader.Create(x.file))
+                        {
+                            ProcessorInfo info = (ProcessorInfo) serializer.Deserialize(reader);
+                            Processor.Processor.Run(info);
+                        }
                     })
                     .WithNotParsed(HandleParseErrors);
             }

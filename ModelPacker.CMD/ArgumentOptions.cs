@@ -6,7 +6,8 @@ using ModelPacker.Processor;
 
 namespace ModelPacker.CMD
 {
-    public class ArgumentOptions
+    [Verb("options")]
+    public class ProcessorInfoArguments
     {
         [Option(Separator = ';', Min = 2, HelpText = "The models to pack.")]
         public IEnumerable<string> models { get; set; }
@@ -34,7 +35,7 @@ namespace ModelPacker.CMD
         [Option(Required = true, HelpText = "Where all the output files should go.")]
         public string outputDir { get; set; }
 
-        [Usage(ApplicationAlias = "ModelPacker")]
+        [Usage(ApplicationAlias = "ModelPacker.CMD.exe")]
         public static IEnumerable<Example> examples
         {
             get
@@ -52,7 +53,7 @@ namespace ModelPacker.CMD
             }
         }
 
-        public static implicit operator ProcessorInfo(ArgumentOptions options)
+        public static implicit operator ProcessorInfo(ProcessorInfoArguments options)
         {
             return new ProcessorInfo
             {
@@ -64,6 +65,25 @@ namespace ModelPacker.CMD
                 outputFilesPrefix = options.outputFilesPrefix,
                 outputDir = options.outputDir
             };
+        }
+    }
+
+    [Verb("from-file", HelpText = "Load settings from a settings xml file")]
+    public class SettingsFileArgument
+    {
+        [Option(Required = true)]
+        public string file { get; set; }
+
+        [Usage(ApplicationAlias = "ModelPacker.CMD.exe")]
+        public static IEnumerable<Example> examples
+        {
+            get
+            {
+                yield return new Example("Default", new SettingsFileArgument
+                {
+                    file = "myTest-settings.xml"
+                });
+            }
         }
     }
 }
