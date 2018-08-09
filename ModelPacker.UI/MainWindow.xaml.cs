@@ -141,21 +141,28 @@ namespace ModelPacker.UI
                 return;
             }
 
-            foreach (string droppedFile in droppedFiles)
+            if (droppedFiles.Length == 1 && Path.GetExtension(droppedFiles[0]) == ".xml")
             {
-                if (Utils.IsModelExtensionSupported(Path.GetExtension(droppedFile)))
+                LoadSettingsFile(droppedFiles[0]);
+            }
+            else
+            {
+                foreach (string droppedFile in droppedFiles)
                 {
-                    ModelFiles.Add(droppedFile, false);
-                }
-                else
-                {
-                    if (Utils.IsImageSupported(droppedFile))
+                    if (Utils.IsModelExtensionSupported(Path.GetExtension(droppedFile)))
                     {
-                        TextureFiles.Add(droppedFile, false);
+                        ModelFiles.Add(droppedFile, false);
                     }
                     else
                     {
-                        Log.Line(LogType.Warning, "Dropped file '{0}' is not supported", droppedFile);
+                        if (Utils.IsImageSupported(droppedFile))
+                        {
+                            TextureFiles.Add(droppedFile, false);
+                        }
+                        else
+                        {
+                            Log.Line(LogType.Warning, "Dropped file '{0}' is not supported", droppedFile);
+                        }
                     }
                 }
             }
@@ -206,6 +213,16 @@ namespace ModelPacker.UI
             ExportDirectory.FullPath = info.outputDir;
         }
 
+        public void LoadSettingsFile(string filePath)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(ProcessorInfo));
+            using (XmlReader reader = XmlReader.Create(filePath))
+            {
+                ProcessorInfo info = (ProcessorInfo) serializer.Deserialize(reader);
+                PopulateFromProcessorInfo(info);
+            }
+        }
+
         private void OnLoadButtonClick(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -219,12 +236,7 @@ namespace ModelPacker.UI
             };
             if (openFileDialog.ShowDialog() == true)
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(ProcessorInfo));
-                using (XmlReader reader = XmlReader.Create(openFileDialog.FileName))
-                {
-                    ProcessorInfo info = (ProcessorInfo) serializer.Deserialize(reader);
-                    PopulateFromProcessorInfo(info);
-                }
+                LoadSettingsFile(openFileDialog.FileName);
             }
         }
     }
