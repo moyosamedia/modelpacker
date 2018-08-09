@@ -4,9 +4,12 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Xml;
 using System.Xml.Serialization;
@@ -128,49 +131,6 @@ namespace ModelPacker.UI
             Processor.Processor.Run(processorInfo);
         }
 
-        private void Window_Drop(object sender, DragEventArgs e)
-        {
-            string[] droppedFiles = null;
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                droppedFiles = e.Data.GetData(DataFormats.FileDrop, true) as string[];
-            }
-
-            if (null == droppedFiles || !droppedFiles.Any())
-            {
-                return;
-            }
-
-            if (droppedFiles.Length == 1 && Path.GetExtension(droppedFiles[0]) == ".xml")
-            {
-                LoadSettingsFile(droppedFiles[0]);
-            }
-            else
-            {
-                foreach (string droppedFile in droppedFiles)
-                {
-                    if (Utils.IsModelExtensionSupported(Path.GetExtension(droppedFile)))
-                    {
-                        ModelFiles.Add(droppedFile, false);
-                    }
-                    else
-                    {
-                        if (Utils.IsImageSupported(droppedFile))
-                        {
-                            TextureFiles.Add(droppedFile, false);
-                        }
-                        else
-                        {
-                            Log.Line(LogType.Warning, "Dropped file '{0}' is not supported", droppedFile);
-                        }
-                    }
-                }
-            }
-
-            ModelFiles.RefreshList();
-            TextureFiles.RefreshList();
-        }
-
         private ProcessorInfo CreateProcessorInfo()
         {
             string[] exportIds = ExportModelFormats.Tag as string[];
@@ -239,5 +199,93 @@ namespace ModelPacker.UI
                 LoadSettingsFile(openFileDialog.FileName);
             }
         }
+
+        #region DragDrop
+
+        // From https://stackoverflow.com/questions/26195160/wpf-drag-and-drop-a-file-into-the-whole-window-titlebar-and-window-borders-inc?rq=1
+
+        private const int WM_DROPFILES = 0x233;
+
+        [DllImport("shell32.dll")]
+        private static extern void DragAcceptFiles(IntPtr hwnd, bool fAccept);
+
+        [DllImport("shell32.dll")]
+        private static extern uint DragQueryFile(IntPtr hDrop, uint iFile, [Out] StringBuilder filename, uint cch);
+
+        [DllImport("shell32.dll")]
+        private static extern void DragFinish(IntPtr hDrop);
+
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            WindowInteropHelper helper = new WindowInteropHelper(this);
+            IntPtr hwnd = helper.Handle;
+
+            HwndSource source = PresentationSource.FromVisual(this) as HwndSource;
+            source.AddHook(WndProc);
+
+            DragAcceptFiles(hwnd, true);
+        }
+
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WM_DROPFILES)
+            {
+                handled = true;
+                return HandleDropFiles(wParam);
+            }
+
+            return IntPtr.Zero;
+        }
+
+        private IntPtr HandleDropFiles(IntPtr hDrop)
+        {
+            const int MAX_PATH = 260;
+
+            uint count = DragQueryFile(hDrop, 0xFFFFFFFF, null, 0);
+
+            for (uint i = 0; i < count; i++)
+            {
+                int size = (int) DragQueryFile(hDrop, i, null, 0);
+
+                StringBuilder filename = new StringBuilder(size + 1);
+                DragQueryFile(hDrop, i, filename, MAX_PATH);
+
+                string droppedFile = filename.ToString();
+
+                if (Path.GetExtension(droppedFile) == ".xml")
+                {
+                    LoadSettingsFile(droppedFile);
+                    break;
+                }
+
+                if (Utils.IsModelExtensionSupported(Path.GetExtension(droppedFile)))
+                {
+                    ModelFiles.Add(droppedFile, false);
+                }
+                else
+                {
+                    if (Utils.IsImageSupported(droppedFile))
+                    {
+                        TextureFiles.Add(droppedFile, false);
+                    }
+                    else
+                    {
+                        Log.Line(LogType.Warning, "Dropped file '{0}' is not supported", droppedFile);
+                    }
+                }
+            }
+
+            DragFinish(hDrop);
+
+            ModelFiles.RefreshList();
+            TextureFiles.RefreshList();
+
+            return IntPtr.Zero;
+        }
+
+        #endregion
     }
 }

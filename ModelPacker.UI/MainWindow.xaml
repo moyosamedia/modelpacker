@@ -6,7 +6,6 @@
                       xmlns:customControls="clr-namespace:ModelPacker.UI.CustomControls"
                       mc:Ignorable="d"
                       Title="Model Packer" Height="700" Width="500"
-                      Drop="Window_Drop"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
