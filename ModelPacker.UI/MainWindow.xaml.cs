@@ -122,11 +122,14 @@ namespace ModelPacker.UI
 
             ProcessorInfo processorInfo = CreateProcessorInfo();
 
-            XmlSerializer serializer = new XmlSerializer(processorInfo.GetType());
-            string savePath = Path.Combine(processorInfo.outputDir,
-                string.Format("{0}-settings.xml", processorInfo.outputFilesPrefix));
-            using (XmlWriter writer = XmlWriter.Create(savePath))
-                serializer.Serialize(writer, processorInfo);
+            if (DoCreateSettingsFile.IsChecked == true)
+            {
+                XmlSerializer serializer = new XmlSerializer(processorInfo.GetType());
+                string savePath = Path.Combine(processorInfo.outputDir,
+                    string.Format("{0}-settings.xml", processorInfo.outputFilesPrefix));
+                using (XmlWriter writer = XmlWriter.Create(savePath))
+                    serializer.Serialize(writer, processorInfo);
+            }
 
             Processor.Processor.Run(processorInfo);
         }

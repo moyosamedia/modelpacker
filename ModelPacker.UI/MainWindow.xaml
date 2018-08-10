@@ -102,6 +102,7 @@
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
 
                         <Label
@@ -149,6 +150,16 @@
                             Grid.Row="3"
                             SelectDirectory="True"
                             x:Name="ExportDirectory" />
+
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="4"
+                            Content="Create Settings File" />
+                        <CheckBox
+                            Grid.Column="1"
+                            Grid.Row="4"
+                            Name="DoCreateSettingsFile"
+                            IsChecked="True" />
                     </Grid>
                 </DockPanel>
             </GroupBox>

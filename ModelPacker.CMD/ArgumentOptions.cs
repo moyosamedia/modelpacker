@@ -36,6 +36,10 @@ namespace ModelPacker.CMD
         [Option('o', "outputdir", Required = true, HelpText = "Where all the output files should go.")]
         public string outputDir { get; set; }
 
+        [Option('n', "nosettingsfile", HelpText =
+            "Enabling this will prevent it from creating the settings file in the output directory")]
+        public bool noSettingsFile { get; set; } = true;
+
         [Usage(ApplicationAlias = "ModelPacker.CMD.exe")]
         public static IEnumerable<Example> examples
         {

@@ -30,11 +30,14 @@ namespace ModelPacker.CMD
                     .WithParsed<ProcessorInfoArguments>(x =>
                     {
                         ProcessorInfo info = (ProcessorInfo) x;
-                        XmlSerializer serializer = new XmlSerializer(info.GetType());
-                        string savePath = Path.Combine(info.outputDir,
-                            string.Format("{0}-settings.xml", info.outputFilesPrefix));
-                        using (XmlWriter writer = XmlWriter.Create(savePath))
-                            serializer.Serialize(writer, info);
+                        if (!x.noSettingsFile)
+                        {
+                            XmlSerializer serializer = new XmlSerializer(info.GetType());
+                            string savePath = Path.Combine(info.outputDir,
+                                string.Format("{0}-settings.xml", info.outputFilesPrefix));
+                            using (XmlWriter writer = XmlWriter.Create(savePath))
+                                serializer.Serialize(writer, info);
+                        }
 
                         Processor.Processor.Run(info);
                     })
