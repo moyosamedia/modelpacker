@@ -348,6 +348,12 @@ ASALocalRun/
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
 
+# Rider
+# Rider auto-generates .iml files, and contentModel.xml
+**/.idea/**/*.iml
+**/.idea/**/contentModel.xml
+**/.idea/**/modules.xml
+
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
