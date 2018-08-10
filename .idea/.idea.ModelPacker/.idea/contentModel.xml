@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="\ca722453" t="IncludeRecursive" />
+    <e p="\app" t="IncludeRecursive" />
+    <e p="D:\Projects\ModelPacker" t="IncludeFlat">
+      <e p="assimp-net\AssimpNet" t="IncludeRecursive">
+        <e p="NodeCollection.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Interfaces.cs" t="Include" />
+        <e p="AssimpLicense.txt" t="Include" />
+        <e p="ExportDataBlob.cs" t="Include" />
+        <e p="TextureSlot.cs" t="Include" />
+        <e p="Node.cs" t="Include" />
+        <e p="Metadata.cs" t="Include" />
+        <e p="Matrix4x4.cs" t="Include" />
+        <e p="MaterialProperty.cs" t="Include" />
+        <e p="MeshKey.cs" t="Include" />
+        <e p="LogStream.cs" t="Include" />
+        <e p="PostProcessPreset.cs" t="Include" />
+        <e p="Texel.cs" t="Include" />
+        <e p="MemoryHelper.cs" t="Include" />
+        <e p="Configs" t="Include">
+          <e p="PropertyConfig.cs" t="Include" />
+        </e>
+        <e p="Mesh.cs" t="Include" />
+        <e p="MeshAnimationAttachment.cs" t="Include" />
+        <e p="Color3D.cs" t="Include" />
+        <e p="Matrix3x3.cs" t="Include" />
+        <e p="NodeAnimationChannel.cs" t="Include" />
+        <e p="Light.cs" t="Include" />
+        <e p="Enums.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="IOSystem.cs" t="Include" />
+        <e p="Color4D.cs" t="Include" />
+        <e p="Vector3D.cs" t="Include" />
+        <e p="Scene.cs" t="Include" />
+        <e p="QuaternionKey.cs" t="Include" />
+        <e p="IOStream.cs" t="Include" />
+        <e p="VectorKey.cs" t="Include" />
+        <e p="FileIOSystem.cs" t="Include" />
+        <e p="Plane.cs" t="Include" />
+        <e p="Face.cs" t="Include" />
+        <e p="InternalInterop.cs" t="Include" />
+        <e p="NativeMarshalerAttribute.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="Unmanaged" t="Include">
+          <e p="AssimpLibrary.cs" t="Include" />
+          <e p="UnmanagedStructures.cs" t="Include" />
+          <e p="AiDefines.cs" t="Include" />
+          <e p="AiMatKeys.cs" t="Include" />
+          <e p="AiConfigs.cs" t="Include" />
+        </e>
+        <e p="VertexWeight.cs" t="Include" />
+        <e p="EmbeddedTexture.cs" t="Include" />
+        <e p="AssimpContext.cs" t="Include" />
+        <e p="Ray.cs" t="Include" />
+        <e p="AssimpNet.csproj" t="IncludeRecursive" />
+        <e p="MeshAnimationChannel.cs" t="Include" />
+        <e p="AssimpException.cs" t="Include" />
+        <e p="Vector2D.cs" t="Include" />
+        <e p="Camera.cs" t="Include" />
+        <e p="Material.cs" t="Include" />
+        <e p="AssimpKey.snk" t="Include" />
+        <e p="Quaternion.cs" t="Include" />
+        <e p="ExportFormatDescription.cs" t="Include" />
+        <e p="UVTransform.cs" t="Include" />
+        <e p="Animation.cs" t="Include" />
+        <e p="Bone.cs" t="Include" />
+      </e>
+      <e p="assimp-net\libs\Assimp\assimp-vc140-mt.dll" t="Include" />
+      <e p="assimp-net\AssimpNet.Interop.Generator" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="AssimpNet.Interop.Generator.csproj" t="IncludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="App.config" t="Include" />
+      </e>
+      <e p="ModelPacker.BinPacker" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Node.cs" t="Include" />
+        <e p="BinPacking.cs" t="Include" />
+        <e p="ModelPacker.BinPacker.csproj" t="IncludeRecursive" />
+        <e p="Block.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+      </e>
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="ModelPacker.Processor" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="ProcessorInfo.cs" t="Include" />
+        <e p="Utils.cs" t="Include" />
+        <e p="packages.config" t="Include" />
+        <e p="Processor.cs" t="Include" />
+        <e p="FileType.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="ModelPacker.Processor.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="ModelPacker.UI" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="App.xaml" t="Include" />
+        <e p="packages.config" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="CustomControls" t="Include">
+          <e p="FileList.xaml.cs" t="Include" />
+          <e p="FileList.xaml" t="Include" />
+          <e p="FilePath.xaml" t="Include" />
+          <e p="FilePath.xaml.cs" t="Include" />
+        </e>
+        <e p="App.xaml.cs" t="Include" />
+        <e p="ModelPacker.UI.csproj" t="IncludeRecursive" />
+        <e p="MainWindow.xaml" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+          <e p="Resources.Designer.cs" t="Include" />
+          <e p="Resources.resx" t="Include" />
+        </e>
+        <e p="MainWindow.xaml.cs" t="Include" />
+        <e p="App.config" t="Include" />
+      </e>
+      <e p="ModelPacker.Logger" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Log.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="ModelPacker.Logger.csproj" t="IncludeRecursive" />
+        <e p="LogType.cs" t="Include" />
+      </e>
+      <e p="ModelPacker.sln" t="IncludeFlat" />
+      <e p="ModelPacker.CMD" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="ModelPacker.CMD.csproj" t="IncludeRecursive" />
+        <e p="ArgumentOptions.cs" t="Include" />
+        <e p="Program.cs" t="Include" />
+      </e>
+    </e>
+    <e p="C:\Users\Vincent\.Rider2018.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Vincent\.Rider2018.2\system\resharper-host\local\Transient\ReSharperHost\v182\SolutionCaches\_ModelPacker.447559354.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Vincent\.Rider2018.2\config\extensions" t="IncludeRecursive" />
+    <e p="C:\Users\Vincent\.Rider2018.2\config\scratches" t="IncludeRecursive" />
+  </component>
+</project>
