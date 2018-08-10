@@ -12,6 +12,7 @@
     <string>baked_building.png</string>
     <string>spot_texture.png</string>
   </textures>
+  <mergeModels>true</mergeModels>
   <keepTransparency>false</keepTransparency>
   <textureOutputType>PNG</textureOutputType>
   <modelExportFormatId>obj</modelExportFormatId>

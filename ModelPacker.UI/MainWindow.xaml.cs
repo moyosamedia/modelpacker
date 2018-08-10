@@ -144,7 +144,7 @@ namespace ModelPacker.UI
             {
                 models = ModelFiles.files.ToArray(),
                 textures = TextureFiles.files.ToArray(),
-                //mergeModels = DoMergeFiles.IsChecked == true,
+                mergeModels = DoMergeModels.IsChecked == true,
                 keepTransparency = DoKeepTransparency.IsChecked == true,
                 modelExportFormatId = exportIds[ExportModelFormats.SelectedIndex],
                 textureOutputType = (TextureFileType) Enum.Parse(typeof(TextureFileType),
@@ -166,6 +166,7 @@ namespace ModelPacker.UI
                 TextureFiles.Add(t, false);
             TextureFiles.RefreshList();
 
+            DoMergeModels.IsChecked = info.mergeModels;
             DoKeepTransparency.IsChecked = info.keepTransparency;
 
             string[] exportIds = (string[]) ExportModelFormats.Tag;

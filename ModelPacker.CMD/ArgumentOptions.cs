@@ -18,6 +18,10 @@ namespace ModelPacker.CMD
               "If there are multiple meshes in 1 file, it will assume there 1 texture for all of them.")]
         public IEnumerable<string> textures { get; set; }
 
+        [Option('M', "mergemodels", HelpText =
+            "Should all the meshes be combined into 1 single mesh.")]
+        public bool mergeModels { get; set; }
+
         [Option('a', "keeptransparency", HelpText =
             "Should we keep the transparency in the output texture. If using JPG as 'textureOutputType' this will be ignored.")]
         public bool keepTransparency { get; set; }
@@ -49,6 +53,7 @@ namespace ModelPacker.CMD
                 {
                     models = new[] {"model1.fbx", "model2.obj"},
                     textures = new[] {"texture1.jpg", "texture2.png"},
+                    mergeModels = true,
                     keepTransparency = true,
                     textureOutputType = TextureFileType.JPG,
                     modelExportFormatId = "obj",
@@ -64,6 +69,7 @@ namespace ModelPacker.CMD
             {
                 models = options.models.ToArray(),
                 textures = options.textures.ToArray(),
+                mergeModels = options.mergeModels,
                 keepTransparency = options.keepTransparency,
                 textureOutputType = options.textureOutputType,
                 modelExportFormatId = options.modelExportFormatId,
