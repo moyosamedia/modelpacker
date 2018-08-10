@@ -15,7 +15,7 @@ namespace ModelPacker.CMD
         [Option('t', "textures", Separator = ';', Required = true, Min = 2, HelpText
             = "The textures to pack. " +
               "It assumes there is 1 texture per 1 model file. " +
-              "If there are multiple meshes in 1 file, it will assume there 1 texture for all of them.")]
+              "If there are multiple meshes in 1 file, it will assume there is 1 texture for all of them.")]
         public IEnumerable<string> textures { get; set; }
 
         [Option('M', "mergemodels", HelpText =
