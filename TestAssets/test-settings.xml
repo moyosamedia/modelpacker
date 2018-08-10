@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProcessorInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <models>
+    <string>blub_quadrangulated.obj</string>
+    <string>bob_quad.obj</string>
+    <string>building.fbx</string>
+    <string>spot_quadrangulated.obj</string>
+  </models>
+  <textures>
+    <string>blub_texture.png</string>
+    <string>bob_diffuse.png</string>
+    <string>baked_building.png</string>
+    <string>spot_texture.png</string>
+  </textures>
+  <keepTransparency>false</keepTransparency>
+  <textureOutputType>PNG</textureOutputType>
+  <modelExportFormatId>obj</modelExportFormatId>
+  <outputFilesPrefix>test</outputFilesPrefix>
+  <outputDir>output\</outputDir>
+</ProcessorInfo>
