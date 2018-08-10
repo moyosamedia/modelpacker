@@ -157,6 +157,8 @@ namespace ModelPacker.Processor
                         // TODO: Add support for offsetting uvs per mesh instead of per model file
                         // Thus having 1 texture per mesh instead of having 1 texture per model file
                         Block<int> block = texturePacker.blocks.First(x => x.data == i);
+                        Log.Line(LogType.Debug, "Using texture at index {0} for this model",
+                            Array.IndexOf(texturePacker.blocks, block));
                         float scaleX = block.w / (float) texturePacker.root.w;
                         float scaleY = block.h / (float) texturePacker.root.h;
                         float offsetX = block.fit.x / (float) texturePacker.root.w;
