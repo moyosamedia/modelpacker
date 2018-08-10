@@ -26,7 +26,7 @@ namespace ModelPacker.CMD
             "What the format of the output texture should be (PNG/JPG/HDR/TIFF).")]
         public TextureFileType textureOutputType { get; set; }
 
-        [Option('e', "modelexexportformat", Required = true,
+        [Option('e', "modelexportformat", Required = true,
             HelpText = "The format in which the model should be exported e.g. obj or fbx.")]
         public string modelExportFormatId { get; set; }
 
