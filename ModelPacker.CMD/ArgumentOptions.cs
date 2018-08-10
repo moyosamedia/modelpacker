@@ -37,7 +37,7 @@ namespace ModelPacker.CMD
         public string outputDir { get; set; }
 
         [Option('n', "nosettingsfile", HelpText =
-            "Enabling this will prevent it from creating the settings file in the output directory")]
+            "Enabling this will prevent it from creating the settings file in the output directory.")]
         public bool noSettingsFile { get; set; }
 
         [Usage(ApplicationAlias = "ModelPacker.CMD.exe")]
