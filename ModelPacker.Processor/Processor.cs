@@ -56,6 +56,7 @@ namespace ModelPacker.Processor
                 {
                     textures[i].BorderColor = MagickColors.Black;
                     textures[i].Border(info.padding);
+                    textures[i].ClampBorder(info.padding);
                 }
 
                 blocks[i] = new Block<int>(textures[i].Width, textures[i].Height, i);
