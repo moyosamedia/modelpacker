@@ -138,6 +138,14 @@ namespace ModelPacker.Processor
                 Log.Line(LogType.Info, "Shifting uv(w) positions of {0} models to their new location",
                     info.models.Length);
 
+                if (info.mergeModels)
+                    Log.Line(LogType.Info, "Going to merge models");
+                Scene mergedScene = new Scene
+                {
+                    RootNode = new Assimp.Node(),
+                    Materials = {new Material()}
+                };
+
                 for (int i = 0; i < info.models.Length; i++)
                 {
                     string modelPath = info.models[i];
@@ -184,16 +192,39 @@ namespace ModelPacker.Processor
 
                             mesh.TextureCoordinateChannels[uvwChannel] = uvw;
                         }
+
+                        if (info.mergeModels)
+                        {
+                            mergedScene.RootNode.MeshIndices.Add(mergedScene.MeshCount);
+                            mesh.MaterialIndex = 0;
+                            mergedScene.Meshes.Add(mesh);
+                            mergedScene.Animations.AddRange(model.Animations);
+                            Log.Line(LogType.Info, "Merged mesh {0} into output model", mesh.Name);
+                        }
                     }
 
+                    if (!info.mergeModels)
+                    {
+                        string savePath = Path.Combine(info.outputDir,
+                            string.Format("{0}-model-{1}.{2}",
+                                info.outputFilesPrefix,
+                                Path.GetFileNameWithoutExtension(modelPath),
+                                exportFormat.FileExtension));
+
+                        Log.Line(LogType.Info, "Saving edited model to '{0}'", savePath);
+                        importer.ExportFile(model, savePath, exportFormat.FormatId);
+                    }
+                }
+
+                if (info.mergeModels)
+                {
                     string savePath = Path.Combine(info.outputDir,
-                        string.Format("{0}-model-{1}.{2}",
+                        string.Format("{0}-model-merged.{1}",
                             info.outputFilesPrefix,
-                            Path.GetFileNameWithoutExtension(modelPath),
                             exportFormat.FileExtension));
 
-                    Log.Line(LogType.Info, "Saving edited model to '{0}'", savePath);
-                    importer.ExportFile(model, savePath, exportFormat.FormatId);
+                    Log.Line(LogType.Info, "Saving merged model to '{0}'", savePath);
+                    importer.ExportFile(mergedScene, savePath, exportFormat.FormatId);
                 }
             }
 
