@@ -60,13 +60,11 @@
                         <Label
                             Grid.Column="0"
                             Grid.Row="0"
-                            Content="Merge Models"
-                            IsEnabled="False" />
+                            Content="Merge Models" />
                         <CheckBox
                             Grid.Column="1"
                             Grid.Row="0"
-                            Name="DoMergeModels"
-                            IsEnabled="False" />
+                            Name="DoMergeModels" />
 
                         <Label
                             Grid.Column="0"
