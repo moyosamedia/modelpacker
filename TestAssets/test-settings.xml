@@ -13,6 +13,7 @@
     <string>spot_texture.png</string>
   </textures>
   <mergeModels>true</mergeModels>
+  <padding>100</padding>
   <keepTransparency>false</keepTransparency>
   <textureOutputType>PNG</textureOutputType>
   <modelExportFormatId>obj</modelExportFormatId>

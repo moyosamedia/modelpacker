@@ -22,6 +22,9 @@ namespace ModelPacker.CMD
             "Should all the meshes be combined into 1 single mesh.")]
         public bool mergeModels { get; set; }
 
+        [Option('p', "padding", HelpText = "Extra padding between the textures in pixels.")]
+        public int padding { get; set; }
+
         [Option('a', "keeptransparency", HelpText =
             "Should we keep the transparency in the output texture. If using JPG as 'textureOutputType' this will be ignored.")]
         public bool keepTransparency { get; set; }
@@ -53,6 +56,7 @@ namespace ModelPacker.CMD
                 {
                     models = new[] {"model1.fbx", "model2.obj"},
                     textures = new[] {"texture1.jpg", "texture2.png"},
+                    padding = 10,
                     mergeModels = true,
                     keepTransparency = true,
                     textureOutputType = TextureFileType.JPG,
@@ -70,6 +74,7 @@ namespace ModelPacker.CMD
                 models = options.models.ToArray(),
                 textures = options.textures.ToArray(),
                 mergeModels = options.mergeModels,
+                padding = options.padding,
                 keepTransparency = options.keepTransparency,
                 textureOutputType = options.textureOutputType,
                 modelExportFormatId = options.modelExportFormatId,

@@ -69,13 +69,14 @@
                         <Label
                             Grid.Column="0"
                             Grid.Row="1"
-                            Content="Padding"
-                            IsEnabled="False" />
+                            Content="Padding" />
                         <Controls:NumericUpDown
                             Grid.Column="1"
                             Grid.Row="1"
-                            IsEnabled="False"
-                            Value="0" />
+                            Value="0"
+                            Minimum="0"
+                            Name="Padding"
+                            NumericInputMode="Numbers" />
 
                         <Label
                             Grid.Column="0"

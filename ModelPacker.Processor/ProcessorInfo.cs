@@ -5,6 +5,7 @@ namespace ModelPacker.Processor
         public string[] models;
         public string[] textures;
         public bool mergeModels;
+        public int padding;
         public bool keepTransparency;
         public TextureFileType textureOutputType;
         public string modelExportFormatId;

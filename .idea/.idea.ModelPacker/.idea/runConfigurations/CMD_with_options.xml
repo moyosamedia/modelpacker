@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="CMD with options" type="DotNetProject" factoryName=".NET Project">
     <option name="EXE_PATH" value="$PROJECT_DIR$/ModelPacker.CMD/bin/Debug/ModelPacker.CMD.exe" />
-    <option name="PROGRAM_PARAMETERS" value="options --models &quot;blub_quadrangulated.obj;bob_quad.obj;building.obj;spot_quadrangulated.obj&quot; --textures &quot;blub_texture.png;bob_diffuse.png;baked_building.png;spot_texture.png&quot; --modelexportformat obj --textureexportformat PNG --outputfilesprefix &quot;test&quot; --outputdir &quot;output/&quot; --mergemodels" />
+    <option name="PROGRAM_PARAMETERS" value="options --models &quot;blub_quadrangulated.obj;bob_quad.obj;building.obj;spot_quadrangulated.obj&quot; --textures &quot;blub_texture.png;bob_diffuse.png;baked_building.png;spot_texture.png&quot; --modelexportformat obj --textureexportformat PNG --outputfilesprefix &quot;test&quot; --outputdir &quot;output/&quot; --mergemodels --padding 100" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/TestAssets" />
     <option name="PASS_PARENT_ENVS" value="1" />
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
