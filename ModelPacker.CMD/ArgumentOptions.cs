@@ -9,30 +9,31 @@ namespace ModelPacker.CMD
     [Verb("options")]
     public class ProcessorInfoArguments
     {
-        [Option(Separator = ';', Required = true, Min = 2, HelpText = "The models to pack.")]
+        [Option('m', "models", Separator = ';', Required = true, Min = 2, HelpText = "The models to pack.")]
         public IEnumerable<string> models { get; set; }
 
-        [Option(Separator = ';', Required = true, Min = 2, HelpText
+        [Option('t', "textures", Separator = ';', Required = true, Min = 2, HelpText
             = "The textures to pack. " +
               "It assumes there is 1 texture per 1 model file. " +
               "If there are multiple meshes in 1 file, it will assume there 1 texture for all of them.")]
-
         public IEnumerable<string> textures { get; set; }
 
-        [Option(HelpText =
+        [Option('a', "keeptransparency", HelpText =
             "Should we keep the transparency in the output texture. If using JPG as 'textureOutputType' this will be ignored.")]
         public bool keepTransparency { get; set; }
 
-        [Option(HelpText = "What the format of the output texture should be (PNG/JPG/HDR/TIFF).")]
+        [Option('i', "textureexportformat", HelpText =
+            "What the format of the output texture should be (PNG/JPG/HDR/TIFF).")]
         public TextureFileType textureOutputType { get; set; }
 
-        [Option(Required = true, HelpText = "The format in which the model should be exported e.g. obj or fbx.")]
+        [Option('e', "modelexexportformat", Required = true,
+            HelpText = "The format in which the model should be exported e.g. obj or fbx.")]
         public string modelExportFormatId { get; set; }
 
-        [Option(Required = true, HelpText = "The prefix that all the files should get.")]
+        [Option('p', "outputfilesprefix", Required = true, HelpText = "The prefix that all the files should get.")]
         public string outputFilesPrefix { get; set; }
 
-        [Option(Required = true, HelpText = "Where all the output files should go.")]
+        [Option('o', "outputdir", Required = true, HelpText = "Where all the output files should go.")]
         public string outputDir { get; set; }
 
         [Usage(ApplicationAlias = "ModelPacker.CMD.exe")]
@@ -68,10 +69,10 @@ namespace ModelPacker.CMD
         }
     }
 
-    [Verb("from-file", HelpText = "Load settings from a settings xml file")]
+    [Verb("from-file", HelpText = "Load settings from a settings file")]
     public class SettingsFileArgument
     {
-        [Option(Required = true)]
+        [Option('f', "file", Required = true, HelpText = "Path to the settings file")]
         public string file { get; set; }
 
         [Usage(ApplicationAlias = "ModelPacker.CMD.exe")]
