@@ -52,6 +52,12 @@ namespace ModelPacker.Processor
             for (int i = 0; i < info.textures.Length; i++)
             {
                 textures[i] = new MagickImage(info.textures[i], readSettings);
+                if (info.padding > 0)
+                {
+                    textures[i].BorderColor = MagickColors.Black;
+                    textures[i].Border(info.padding);
+                }
+
                 blocks[i] = new Block<int>(textures[i].Width, textures[i].Height, i);
             }
 
@@ -83,7 +89,10 @@ namespace ModelPacker.Processor
                                 block.fit.x, block.fit.y,
                                 block.w, block.h);
 
-                            finalTexture.Composite(textures[i], block.fit.x, block.fit.y, CompositeOperator.Copy);
+                            finalTexture.Composite(textures[i],
+                                block.fit.x,
+                                block.fit.y,
+                                CompositeOperator.Copy);
                         }
                         else
                         {
@@ -167,10 +176,10 @@ namespace ModelPacker.Processor
                         Block<int> block = texturePacker.blocks.First(x => x.data == i);
                         Log.Line(LogType.Debug, "Using texture at index {0} for this model",
                             Array.IndexOf(texturePacker.blocks, block));
-                        float scaleX = block.w / (float) texturePacker.root.w;
-                        float scaleY = block.h / (float) texturePacker.root.h;
-                        float offsetX = block.fit.x / (float) texturePacker.root.w;
-                        float offsetY = block.fit.y / (float) texturePacker.root.h;
+                        float scaleX = (block.w - info.padding * 2) / (float) texturePacker.root.w;
+                        float scaleY = (block.h - info.padding * 2) / (float) texturePacker.root.h;
+                        float offsetX = (block.fit.x + info.padding) / (float) texturePacker.root.w;
+                        float offsetY = (block.fit.y + info.padding) / (float) texturePacker.root.h;
                         offsetY = 1 - offsetY - scaleY; // This is because the uv 0,0 is in the bottom left
 
                         Log.Line(LogType.Debug, "Calculated scaling multipliers: x: {0}; y: {1}", scaleX, scaleY);
