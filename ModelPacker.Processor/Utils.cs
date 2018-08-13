@@ -96,11 +96,11 @@ namespace ModelPacker.Processor
             pixels.SetArea(0, 0, borderSize, borderSize, targetColor.RepeatArray(cornerSize));
 
             // Fill top right corner
-            targetColor = pixels.GetValue(rightOffset - 1, borderSize + 1);
+            targetColor = pixels.GetValue(rightOffset - 1, borderSize);
             pixels.SetArea(rightOffset, 0, borderSize, borderSize, targetColor.RepeatArray(cornerSize));
 
             // Fill bottom left corner
-            targetColor = pixels.GetValue(0, bottomOffset - 1);
+            targetColor = pixels.GetValue(borderSize, bottomOffset - 1);
             pixels.SetArea(0, bottomOffset, borderSize, borderSize, targetColor.RepeatArray(cornerSize));
 
             // Fill bottom right corner
