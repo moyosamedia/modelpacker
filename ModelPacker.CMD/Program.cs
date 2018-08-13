@@ -66,6 +66,7 @@ namespace ModelPacker.CMD
             {
                 parser.Dispose();
             }
+            // TODO: Set the return value based on the result of the processor
         }
 
         private static void HandleParseErrors(IEnumerable<Error> errors)
