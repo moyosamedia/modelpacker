@@ -25,3 +25,5 @@ After you have cloned this project, you have to install the sub module. You can 
 ```git submodule update --init --recursive```
 
 After that you can open the project in your favorite IDE (rider recommended) and make sure the NuGet packages are installed. After the projects are loaded, you should first build the `AssimpNet.Interop.Generator` project. After that you can either build the `ModelPacker.UI` or `ModelPacker.CMD` project depending on your preference. You can find the built files in the bin folder of the selected project.
+
+Building and running on Linux and OSX should work although it is only tested on Ubuntu 16.04. You will have to install mono to be able to compile and run the program. It is required to install the latest mono as instructed [here](https://www.mono-project.com/download/stable/#download-lin), otherwise you won't be able to compile and run .net 4.5.2. It won't be possible to build and/or run the `ModelPacker.UI` project since mono does not support WPF. Because of this, you might have to right click on the `ModelPacker.CMD` project and select build there.
