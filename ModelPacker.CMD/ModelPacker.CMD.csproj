@@ -61,7 +61,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(ProjectDir)..\assimp-net\libs\Assimp\Assimp*" "$(ProjectDir)$(OutputPath)"</PostBuildEvent>
+    <PostBuildEvent Condition="'$(OS)' == 'Windows_NT'">xcopy /Y "$(ProjectDir)..\assimp-net\libs\Assimp\Assimp*" "$(ProjectDir)$(OutputPath)"</PostBuildEvent>
+    <PostBuildEvent Condition="'$(OS)' != 'Windows_NT'">
+        yes | cp "$(ProjectDir)..\assimp-net\libs\Assimp\"*assimp* "$(ProjectDir)$(OutputPath)"
+        yes | cp "$(SolutionDir)packages\Magick.NET-Q8-AnyCPU.7.5.0.1\runtimes\linux-x64\native\Magick.NET-Q8-x64.Native.dll.so" "$(ProjectDir)$(OutputPath)libMagick.NET-Q8-x64.Native.dll.so"
+        yes | cp "$(SolutionDir)packages\Magick.NET-Q8-AnyCPU.7.5.0.1\lib\netstandard13\Magick"* "$(ProjectDir)$(OutputPath)"
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
