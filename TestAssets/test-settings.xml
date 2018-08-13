@@ -18,5 +18,5 @@
   <textureOutputType>PNG</textureOutputType>
   <modelExportFormatId>obj</modelExportFormatId>
   <outputFilesPrefix>test</outputFilesPrefix>
-  <outputDir>output\</outputDir>
+  <outputDir>output/</outputDir>
 </ProcessorInfo>
