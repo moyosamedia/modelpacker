@@ -33,8 +33,17 @@ namespace ModelPacker.CMD
                         if (!x.noSettingsFile)
                         {
                             XmlSerializer serializer = new XmlSerializer(info.GetType());
-                            string savePath = Path.Combine(info.outputDir,
-                                string.Format("{0}-settings.xml", info.outputFilesPrefix));
+                            string savePath;
+                            if (!string.IsNullOrEmpty(info.outputFilesPrefix.Trim()))
+                            {
+                                savePath = Path.Combine(info.outputDir,
+                                    string.Format("{0}-settings.xml", info.outputFilesPrefix));
+                            }
+                            else
+                            {
+                                savePath = Path.Combine(info.outputDir, "settings.xml");
+                            }
+
                             using (XmlWriter writer = XmlWriter.Create(savePath))
                                 serializer.Serialize(writer, info);
                         }

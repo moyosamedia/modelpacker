@@ -105,8 +105,18 @@ namespace ModelPacker.Processor
 
                     try
                     {
-                        string savePath = Path.Combine(info.outputDir,
-                            string.Format("{0}-textures.{1}", info.outputFilesPrefix, info.textureOutputType));
+                        string savePath;
+                        if (!string.IsNullOrEmpty(info.outputFilesPrefix.Trim()))
+                        {
+                            savePath = Path.Combine(info.outputDir,
+                                string.Format("{0}-textures.{1}", info.outputFilesPrefix, info.textureOutputType));
+                        }
+                        else
+                        {
+                            savePath = Path.Combine(info.outputDir,
+                                string.Format("textures.{0}", info.textureOutputType));
+                        }
+
                         Log.Line(LogType.Info, "Saving packed texture to '{0}'", savePath);
                         finalTexture.Write(savePath);
                     }
@@ -215,11 +225,22 @@ namespace ModelPacker.Processor
 
                     if (!info.mergeModels)
                     {
-                        string savePath = Path.Combine(info.outputDir,
-                            string.Format("{0}-model-{1}.{2}",
-                                info.outputFilesPrefix,
-                                Path.GetFileNameWithoutExtension(modelPath),
-                                exportFormat.FileExtension));
+                        string savePath;
+                        if (!string.IsNullOrEmpty(info.outputFilesPrefix.Trim()))
+                        {
+                            savePath = Path.Combine(info.outputDir,
+                                string.Format("{0}-model-{1}.{2}",
+                                    info.outputFilesPrefix,
+                                    Path.GetFileNameWithoutExtension(modelPath),
+                                    exportFormat.FileExtension));
+                        }
+                        else
+                        {
+                            savePath = Path.Combine(info.outputDir,
+                                string.Format("model-{0}.{1}",
+                                    Path.GetFileNameWithoutExtension(modelPath),
+                                    exportFormat.FileExtension));
+                        }
 
                         Log.Line(LogType.Info, "Saving edited model to '{0}'", savePath);
                         importer.ExportFile(model, savePath, exportFormat.FormatId);
@@ -228,10 +249,20 @@ namespace ModelPacker.Processor
 
                 if (info.mergeModels)
                 {
-                    string savePath = Path.Combine(info.outputDir,
-                        string.Format("{0}-model-merged.{1}",
-                            info.outputFilesPrefix,
-                            exportFormat.FileExtension));
+                    string savePath;
+                    if (!string.IsNullOrEmpty(info.outputFilesPrefix.Trim()))
+                    {
+                        savePath = Path.Combine(info.outputDir,
+                            string.Format("{0}-models-merged.{1}",
+                                info.outputFilesPrefix,
+                                exportFormat.FileExtension));
+                    }
+                    else
+                    {
+                        savePath = Path.Combine(info.outputDir,
+                            string.Format("models-merged.{0}",
+                                exportFormat.FileExtension));
+                    }
 
                     Log.Line(LogType.Info, "Saving merged model to '{0}'", savePath);
                     importer.ExportFile(mergedScene, savePath, exportFormat.FormatId);
@@ -264,12 +295,6 @@ namespace ModelPacker.Processor
             if (string.IsNullOrEmpty(info.modelExportFormatId))
             {
                 Log.Line(LogType.Error, "Export format is null");
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(info.outputFilesPrefix))
-            {
-                Log.Line(LogType.Error, "Output files prefix was not supplied");
                 return false;
             }
 

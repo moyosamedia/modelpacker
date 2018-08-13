@@ -125,8 +125,17 @@ namespace ModelPacker.UI
             if (DoCreateSettingsFile.IsChecked == true)
             {
                 XmlSerializer serializer = new XmlSerializer(processorInfo.GetType());
-                string savePath = Path.Combine(processorInfo.outputDir,
-                    string.Format("{0}-settings.xml", processorInfo.outputFilesPrefix));
+                string savePath;
+                if (!string.IsNullOrEmpty(processorInfo.outputFilesPrefix.Trim()))
+                {
+                    savePath = Path.Combine(processorInfo.outputDir,
+                        string.Format("{0}-settings.xml", processorInfo.outputFilesPrefix));
+                }
+                else
+                {
+                    savePath = Path.Combine(processorInfo.outputDir, "settings.xml");
+                }
+
                 using (XmlWriter writer = XmlWriter.Create(savePath))
                     serializer.Serialize(writer, processorInfo);
             }
@@ -150,7 +159,7 @@ namespace ModelPacker.UI
                 modelExportFormatId = exportIds[ExportModelFormats.SelectedIndex],
                 textureOutputType = (TextureFileType) Enum.Parse(typeof(TextureFileType),
                     ExportTextureFormats.SelectedItem.ToString()),
-                outputFilesPrefix = FilesPrefix.Text,
+                outputFilesPrefix = FilesPrefix.Text.Trim(),
                 outputDir = ExportDirectory.FullPath
             };
         }
